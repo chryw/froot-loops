@@ -1,0 +1,12 @@
+$color-brand: #5c2d91;
+$color-brand-darker: darken($color-brand, 20%);
+$color-brand-lighter: lighten($color-brand, 20%);
+
+$color-neutrual: #555555;
+$color-neutrual-darker: darken($color-neutrual, 20%);
+$color-neutrual-darkest: #000000;
+$color-neutrual-lighter: lighten($color-neutrual, 20%);
+$color-neutrual-lightest: lighten($color-neutrual, 40%);
+
+$color-black: #000000;
+$color-white: #ffffff;
