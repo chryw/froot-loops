@@ -1,2 +1,15 @@
-.Gallery {
+@import '../../Styles/_variables/_colors.scss';
+
+.Gallery-body {
+  *[role="listitem"] {
+    float: left;
+  }
+  & > div {
+    height: 100%;
+    overflow-y: auto;
+  }
+}
+
+.Gallery-detailPane-footer {
+  margin-top: 2rem;
 }

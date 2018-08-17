@@ -1,3 +1,5 @@
+@import '../../../node_modules/office-ui-fabric-react/dist/sass/variables/_Color.Variables.scss';
+
 $color-brand: #5c2d91;
 $color-brand-darker: darken($color-brand, 20%);
 $color-brand-lighter: lighten($color-brand, 20%);

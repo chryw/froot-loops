@@ -1,16 +1,18 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Header from './Components/Header/Header';
-import Home from './Pages/Home/Home';
-import Icons from './Pages/Icons/Icons';
-import Illustrations from './Pages/Illustrations/Illustrations';
-import Brands from './Pages/Brands/Brands';
+import SiteHeader from './Components/SiteHeader/SiteHeader';
+import {
+  Home,
+  Icons,
+  Illustrations,
+  Brands,
+} from './Pages/index';
 import './App.css';
 
 const App = () => (
   <Router basename="/">
-    <div className="App ms-Fabric" dir="ltr">
-      <Header />
+    <div className="App ms-Fabric ms-normalize" dir="ltr">
+      <SiteHeader />
       <div className="Content">
         <Route exact path="/" component={Home} />
         <Route path="/icons" component={Icons} />

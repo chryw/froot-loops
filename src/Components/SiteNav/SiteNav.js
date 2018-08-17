@@ -1,5 +1,6 @@
 import React from 'react';
-import { Icon, Link, DefaultButton } from 'office-ui-fabric-react/lib/index';
+import { IconButton, Link } from 'office-ui-fabric-react/lib/index';
+import './SiteNav.css';
 
 class SiteNav extends React.Component {
   constructor() {
@@ -68,18 +69,19 @@ class SiteNav extends React.Component {
     // TODO: make stateful component for menu items for active state
     return (
       <div className="SiteNav">
-        <button
-          className="SiteNav-button"
-          onClick={this.toggleNavMenu}
-          type="button"
-        >
-          <Icon iconName="GlobalNavButton" />
-        </button>
+        <div className="SiteNav-button ms-hiddenMdUp">
+          <IconButton
+            title="Toggle menu"
+            ariaLabel="Toggle menu"
+            iconProps={{ iconName: `${expanded ? 'Cancel' : 'GlobalNavButton'}` }}
+            onClick={this.toggleNavMenu}
+          />
+        </div>
         <ul
           className={`SiteNav-menu ${expanded ? 'expanded' : 'collapsed'}`}
         >
           {links.map(item => (
-            <li key={item.url}>
+            <li key={item.url} className="SiteNav-menuItem">
               <Link
                 href={item.url}
               >

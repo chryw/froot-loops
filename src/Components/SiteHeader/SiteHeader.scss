@@ -1,0 +1,41 @@
+@import '../../Styles/_variables/_colors';
+@import '../../Styles/_variables/_responsive';
+
+.SiteHeader {
+  height: 50px;
+  line-height: 50px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10000;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.SiteHeader-brand {
+  height: 50px;
+  line-height: 50px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.SiteHeader-logo {
+  height: 50px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin-right: 8px;
+}
+
+.SiteHeader-name {
+  font-size: 18px;
+}
+
+@media screen and (min-width: $ms-screen-min-md) {
+  .SiteHeader {
+    flex-wrap: nowrap;
+  }
+  .SiteHeader-brand {
+    width: 150px;
+  }
+}
