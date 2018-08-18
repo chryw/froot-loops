@@ -4,6 +4,9 @@ import Gallery from '../../../Components/Gallery/Gallery';
 import data from './assets/data.json';
 import eula from './assets/Visual_Studio_2017_Image_Library_EULA.RTF';
 
+
+const IMAGE_PLACEHOLDER = 'https://via.placeholder.com/500/dadada/000000';
+
 const footerContent = (
   <div>
     <p>
@@ -18,7 +21,7 @@ const footerContent = (
 );
 
 const Vs2017 = () => (
-  <Gallery items={data} footer={footerContent} />
+  <Gallery itemType="icon" items={data} urlprefix={`${IMAGE_PLACEHOLDER}?text=Vs2017/`} footerContent={footerContent} />
 );
 
 export default Vs2017;

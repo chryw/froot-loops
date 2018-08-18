@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './Gallery.css';
-import { List, SearchBox, Link } from 'office-ui-fabric-react/lib/index';
+import { List, SearchBox } from 'office-ui-fabric-react/lib/index';
 import SmallGridItem from '../SmallGridItem/SmallGridItem';
 import DetailPane from '../DetailPane/DetailPane';
+import { IconDetailTemplate, ImageDetailTemplate, ComponentDetailTemplate } from '../DetailPane/Templates/index';
 
 const ROWS_PER_PAGE = 3;
 const MAX_ROW_HEIGHT = 100;
@@ -84,12 +85,31 @@ class Gallery extends React.Component {
       currentItem,
       view,
     } = this.state;
+
     const {
-      footer,
+      itemType,
+      urlprefix,
+      footerContent,
     } = this.props;
+
+    let detailTemplate;
+    switch (itemType) {
+      case 'icon':
+        detailTemplate = (<IconDetailTemplate {...currentItem} urlprefix={urlprefix} />);
+        break;
+      case 'image':
+        detailTemplate = (<ImageDetailTemplate {...currentItem} urlprefix={urlprefix} />);
+        break;
+      case 'component':
+        detailTemplate = (<ComponentDetailTemplate {...currentItem} urlprefix={urlprefix} />);
+        break;
+      default:
+        detailTemplate = (<IconDetailTemplate {...currentItem} urlprefix={urlprefix} />);
+    }
+
     return (
       <div className="Gallery ms-Grid">
-        <div className="ms-Grid-row">
+        <div className="ms-Grid-row Gallery-search">
           <div className="ms-Grid-col ms-sm12 ms-md8 ms-lg6 ms-xl4">
             <SearchBox
               placeholder="Search icons"
@@ -131,6 +151,7 @@ class Gallery extends React.Component {
                     >
                       <SmallGridItem
                         {...item}
+                        urlprefix={urlprefix}
                         onClick={e => this.onItemClick(e, item)}
                       />
                     </div>
@@ -142,42 +163,22 @@ class Gallery extends React.Component {
             />
           </div>
           <div className="ms-Grid-col ms-lg3 ms-hiddenMdDown">
-            <DetailPane
-              header={currentItem ? currentItem.name : ''}
-              imagesrc={currentItem ? `${IMAGE_PLACEHOLDER}?text=${currentItem.name}` : ''}
-              footer={footer}
-            >
-              {currentItem ? (
-                <div>
-                  <h2 className="ms-font-xl">
-                    {'Keywords'}
-                  </h2>
-                  <p>
-                    {currentItem.keywords ? currentItem.keywords.join(', ') : ''}
-                  </p>
-                  <h2 className="ms-font-xl">
-                    {'Description'}
-                  </h2>
-                  <p>
-                    {currentItem.description}
-                  </p>
-                  <h2 className="ms-font-xl">
-                    {'Downloads'}
-                  </h2>
-                  <div>
-                    <Link href={IMAGE_PLACEHOLDER} download>
-                      {'SVG'}
-                    </Link>
-                    <Link href={IMAGE_PLACEHOLDER} download>
-                      {'PNG'}
-                    </Link>
-                    <Link href={IMAGE_PLACEHOLDER} download>
-                      {'XAML'}
-                    </Link>
-                  </div>
-                </div>
-              ) : ''}
-            </DetailPane>
+            {currentItem ? (
+              <DetailPane
+                header={currentItem.name}
+                imagesrc={`${urlprefix}${currentItem.name}`}
+                urlprefix={urlprefix}
+                footerContent={footerContent}
+              >
+                {detailTemplate}
+              </DetailPane>
+            ) : (
+              <DetailPane
+                footerContent={footerContent}
+              >
+                {'Select an item from the list to view details and get download links.'}
+              </DetailPane>
+            )}
           </div>
         </div>
       </div>
@@ -186,12 +187,16 @@ class Gallery extends React.Component {
 }
 
 Gallery.propTypes = {
+  itemType: PropTypes.string,
   items: PropTypes.array.isRequired,
-  footer: PropTypes.object,
+  urlprefix: PropTypes.string,
+  footerContent: PropTypes.object,
 };
 
 Gallery.defaultProps = {
-  footer: {},
+  itemType: 'icon',
+  urlprefix: IMAGE_PLACEHOLDER,
+  footerContent: {},
 };
 
 export default Gallery;

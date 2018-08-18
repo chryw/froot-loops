@@ -1,21 +1,22 @@
 import React from 'react';
 import { Link } from 'office-ui-fabric-react/lib/index';
 import PropTypes from 'prop-types';
+import './PageHeader.css';
 
 const PageHeader = (props) => {
-  const { title, intro, navItems } = props;
+  const { title, navItems } = props;
   return (
     <div className="PageHeader ms-Grid ms-bgColor-purple ms-fontColor-white">
       <h1 className="PageHeader-title ms-font-su">
         {title}
       </h1>
-      <div className="PageHeader-intro">
-        {intro}
-      </div>
-      <ul className="PageHeader-topics">
+      <ul className="PageHeader-nav">
         {navItems.map(item => (
-          <li key={item.url}>
-            <Link href={item.url}>
+          <li
+            className="PageHeader-navItem"
+            key={item.url}
+          >
+            <Link href={item.url} title={item.name}>
               {item.name}
             </Link>
           </li>
@@ -27,12 +28,10 @@ const PageHeader = (props) => {
 
 PageHeader.propTypes = {
   title: PropTypes.string.isRequired,
-  intro: PropTypes.object,
   navItems: PropTypes.array,
 };
 
 PageHeader.defaultProps = {
-  intro: {},
   navItems: [],
 };
 

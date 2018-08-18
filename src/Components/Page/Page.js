@@ -29,7 +29,7 @@ const Page = (props) => {
 
 Page.propTypes = {
   title: PropTypes.string.isRequired,
-  intro: PropTypes.object,
+  intro: PropTypes.string,
   navItems: PropTypes.array,
   children: PropTypes.array.isRequired,
 };

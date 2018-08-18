@@ -1,13 +1,14 @@
 @import '../../Styles/_variables/_colors';
 @import '../../Styles/_variables/_responsive';
+@import '../../Styles/_mixins/_link-color';
 
 .SiteNav-button {
   position: absolute;
-  height: 50px;
+  height: 4vh;
   top: 0;
   left: 1rem;
   &>* {
-    height: 50px;
+    height: 4vh;
   }
   i {
     color: $ms-color-white;
@@ -28,7 +29,7 @@
   overflow: hidden;
   padding: 0;
   position: absolute;
-  top: 50px;
+  top: 4vh;
   width: 100%;
   &.expanded {
     max-height: none;
@@ -39,22 +40,18 @@
     display: block;
     padding-left: 1rem;
     padding-right: 1rem;
-    &,
-    &:visited,
+    @include link-color($ms-color-neutralPrimary, $ms-color-neutralDark);
     &:hover,
-    &:focus {
-      color: $ms-color-neutralDark;
-    }
-    &:hover,
-    &:focus {
+    &:focus,
+    &:active {
       text-decoration: underline;
     }
   }
 }
 
 .SiteNav-menuItem {
-  height: 50px;
-  line-height: 50px;
+  height: 4vh;
+  line-height: 4vh;
   width: 100%;
   &:hover,
   &:focus {
@@ -71,12 +68,7 @@
     position: relative;
     top: 0;
     a {
-      &,
-      &:visited,
-      &:hover,
-      &:focus {
-        color: $ms-color-white;
-      }
+      @include link-color($ms-color-white, $ms-color-white);
     }
   }
   .SiteNav-menuItem {

@@ -1,12 +1,20 @@
 @import '../../Styles/_variables/_colors.scss';
 
+.Gallery {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.Gallery-search {
+  flex-shrink: 0;
+}
+
 .Gallery-body {
+  overflow-y: auto;
   *[role="listitem"] {
     float: left;
-  }
-  & > div {
-    height: 100%;
-    overflow-y: auto;
   }
 }
 

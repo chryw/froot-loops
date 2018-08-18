@@ -1,0 +1,13 @@
+@import '../_variables/_colors';
+@mixin link-color($defaultColor: $ms-color-themePrimary, $activeColor: $ms-color-themeDark) {
+  &,
+  &:visited {
+    color: $defaultColor;
+  }
+  &:hover,
+  &:active,
+  &:focus,
+  &:active:hover {
+    color: $activeColor;
+  }
+}

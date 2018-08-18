@@ -7,13 +7,12 @@ import {
 } from 'office-ui-fabric-react/lib/index';
 import './SmallGridItem.css';
 
-const IMAGE_PLACEHOLDER = 'https://via.placeholder.com/500/dadada/000000';
-
 const SmallGridItem = (props) => {
   const {
     id,
     name,
     onClick,
+    urlprefix,
   } = props;
   return (
     <TooltipHost
@@ -29,7 +28,7 @@ const SmallGridItem = (props) => {
       >
         <div className="SmallGridItem-image">
           <Image
-            src={IMAGE_PLACEHOLDER}
+            src={`${urlprefix}/${name}.svg`}
             alt={name}
             imageFit={ImageFit.fill}
             width="100%"
@@ -44,6 +43,7 @@ const SmallGridItem = (props) => {
 SmallGridItem.propTypes = {
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
+  urlprefix: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 

@@ -8,7 +8,7 @@ const DetailPane = (props) => {
     header,
     imagesrc,
     children,
-    footer,
+    footerContent,
   } = props;
   return (
     <div className="DetailPane">
@@ -29,7 +29,7 @@ const DetailPane = (props) => {
         {children}
       </div>
       <div className="DetailPane-footer">
-        {footer}
+        {footerContent}
       </div>
     </div>
   );
@@ -39,14 +39,14 @@ DetailPane.propTypes = {
   header: PropTypes.string,
   imagesrc: PropTypes.string,
   children: PropTypes.any,
-  footer: PropTypes.object,
+  footerContent: PropTypes.object,
 };
 
 DetailPane.defaultProps = {
   header: '',
   imagesrc: '',
-  children: {},
-  footer: {},
+  children: '',
+  footerContent: {},
 };
 
 export default DetailPane;

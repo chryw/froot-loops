@@ -1,0 +1,41 @@
+@import '../../../Styles/_variables/_colors';
+@import '../../../Styles/_variables/_responsive';
+@import '../../../Styles/_mixins/_link-color';
+@import '../../../Styles/_mixins/_link-hover';
+
+.PageHeader {
+  padding: 0 2rem;
+}
+
+.PageHeader-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.PageHeader-navItem {
+  width: 100%;
+  a {
+    display: block;
+    height: 50px;
+    line-height: 50px;
+    @include link-color($ms-color-white, $ms-color-white);
+  }
+}
+@media screen and (min-width: $ms-screen-min-md) {
+  .PageHeader-nav {
+    flex-wrap: nowrap;
+  }
+
+  .PageHeader-navItem {
+    width: auto;
+    a {
+      display: inline-block;
+      text-align: center;
+      margin-right: 20px;
+      @include link-hover;
+    }
+  }
+}
