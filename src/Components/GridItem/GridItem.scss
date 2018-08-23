@@ -1,20 +1,20 @@
 @import '../../Styles/_variables/_colors.scss';
 
-.SmallGridItem {
-  background: none;
-  border-radius: 2px;
+.GridItem {
   border: 1px solid transparent;
   display: block;
   height: inherit;
   padding: 0;
   position: relative;
   width: inherit;
+  background: none;
   &:hover,
   &:focus {
     border-color: $ms-color-themePrimary;
+    background: none;
   }
 }
 
-.SmallGridItem-image {
+.GridItem-image {
   padding: 20%;
 }

@@ -1,15 +1,15 @@
+import DetailPane from './DetailPane/DetailPane';
 import Gallery from './Gallery/Gallery';
-import Header from './Header/Header';
-import Icon from './Icon/Icon';
-import PageHeader from './PageHeader/PageHeader';
+import Page from './Page/Page';
+import SiteHeader from './SiteHeader/SiteHeader';
 import SiteNav from './SiteNav/SiteNav';
 import SmallGridItem from './SmallGridItem/SmallGridItem';
 
 export {
+  DetailPane,
   Gallery,
-  Header,
-  Icon,
-  PageHeader,
+  SiteHeader,
+  Page,
   SiteNav,
   SmallGridItem,
 };

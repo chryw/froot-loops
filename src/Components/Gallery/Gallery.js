@@ -1,14 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './Gallery.css';
-import { List, SearchBox } from 'office-ui-fabric-react/lib/index';
-import SmallGridItem from '../SmallGridItem/SmallGridItem';
+import {
+  CommandBar,
+  DetailsList,
+  List,
+  SearchBox,
+} from 'office-ui-fabric-react/lib/index';
+import GridItem from '../GridItem/GridItem';
+import TileItem from '../TileItem/TileItem';
 import DetailPane from '../DetailPane/DetailPane';
 import { IconDetailTemplate, ImageDetailTemplate, ComponentDetailTemplate } from '../DetailPane/Templates/index';
 
-const ROWS_PER_PAGE = 3;
-const MAX_ROW_HEIGHT = 100;
-const RENDERED_WINDOWS_AHEAD = 3;
+const ROWS_PER_PAGE = 2;
+const RENDERED_WINDOWS_AHEAD = 2;
 const IMAGE_PLACEHOLDER = 'https://via.placeholder.com/500/dadada/000000';
 
 class Gallery extends React.Component {
@@ -18,7 +23,6 @@ class Gallery extends React.Component {
       items: [],
       filteredItems: [],
       count: 0,
-      view: 'grid',
     };
     this.limitResult = (data, amount) => {
       let dataLimited;
@@ -37,12 +41,14 @@ class Gallery extends React.Component {
     this.getItemCountForPage = this.getItemCountForPage.bind(this);
     this.getPageHeight = this.getPageHeight.bind(this);
     this.onItemClick = this.onItemClick.bind(this);
+    this.onViewButtonClick = this.onViewButtonClick.bind(this);
   }
 
   componentDidMount() {
-    const { items } = this.props;
+    const { items, viewModes } = this.props;
     const { filteredItems } = this.state;
     this.setState({
+      viewMode: viewModes[0],
       items: this.limitResult(
         this.filterResult(items),
         -1,
@@ -63,13 +69,30 @@ class Gallery extends React.Component {
     });
   }
 
+  onViewButtonClick(viewMode) {
+    this.setState({
+      viewMode,
+    });
+  }
+
   getItemCountForPage(itemIndex, surfaceRect) {
+    const { viewMode } = this.state;
+    let maxRowHeight;
+    switch (viewMode) {
+      case 'grid':
+        maxRowHeight = 100;
+        break;
+      case 'tile':
+        maxRowHeight = 360;
+        break;
+      default:
+        maxRowHeight = 100;
+    }
     if (itemIndex === 0) {
-      this.columnCount = Math.ceil(surfaceRect.width / MAX_ROW_HEIGHT);
+      this.columnCount = Math.ceil(surfaceRect.width / maxRowHeight);
       this.columnWidth = Math.floor(surfaceRect.width / this.columnCount);
       this.rowHeight = this.columnWidth;
     }
-
     return this.columnCount * ROWS_PER_PAGE;
   }
 
@@ -77,39 +100,130 @@ class Gallery extends React.Component {
     return this.rowHeight * ROWS_PER_PAGE;
   }
 
+  renderDetailPane() {
+    const { itemType, urlprefix, footerContent } = this.props;
+    const { currentItem } = this.state;
+    let detailPaneBody;
+    switch (itemType) {
+      case 'icon':
+        detailPaneBody = (<IconDetailTemplate {...currentItem} urlprefix={urlprefix} />);
+        break;
+      case 'image':
+        detailPaneBody = (<ImageDetailTemplate {...currentItem} urlprefix={urlprefix} />);
+        break;
+      case 'component':
+        detailPaneBody = (<ComponentDetailTemplate {...currentItem} urlprefix={urlprefix} />);
+        break;
+      default:
+        detailPaneBody = (<IconDetailTemplate {...currentItem} urlprefix={urlprefix} />);
+    }
+    return (
+      <div className="Gallery-detailPane">
+        {currentItem ? (
+          <DetailPane
+            header={currentItem.name}
+            imagesrc={`${urlprefix}${currentItem.name}`}
+            urlprefix={urlprefix}
+            footerContent={footerContent}
+          >
+            {detailPaneBody}
+          </DetailPane>
+        ) : (
+          <DetailPane
+            footerContent={footerContent}
+          >
+            {'Select an item from the list to view details and get download links.'}
+          </DetailPane>
+        )}
+      </div>
+    );
+  }
+
+  renderView() {
+    const {
+      filteredItems,
+      viewMode,
+    } = this.state;
+
+    const {
+      urlprefix,
+      fieldNames,
+    } = this.props;
+
+    const gridView = (
+      <div className="Gallery-grid ms-Grid-row">
+        <div className="ms-Grid-col ms-lg9">
+          <List
+            items={filteredItems}
+            renderedWindowsAhead={RENDERED_WINDOWS_AHEAD}
+            getItemCountForPage={this.getItemCountForPage}
+            getPageHeight={this.getPageHeight}
+            onRenderCell={item => (
+              <GridItem
+                {...item}
+                urlprefix={urlprefix}
+                onClick={e => this.onItemClick(e, item)}
+                width={this.columnWidth}
+                height={this.columnWidth}
+              />
+            )}
+          />
+        </div>
+        <div className="ms-Grid-col ms-lg3 ms-hiddenMdDown">
+          {this.renderDetailPane()}
+        </div>
+      </div>
+    );
+
+    const listView = (
+      <DetailsList
+        className="Gallery-list ms-Grid-row"
+        items={filteredItems}
+        selectionPreservedOnEmptyClick
+        columns={fieldNames}
+      />
+    );
+
+    const tileView = (
+      <List
+        items={filteredItems}
+        renderedWindowsAhead={RENDERED_WINDOWS_AHEAD}
+        getItemCountForPage={this.getItemCountForPage}
+        getPageHeight={this.getPageHeight}
+        onRenderCell={item => (
+          <TileItem
+            {...item}
+            urlprefix={urlprefix}
+            width={this.columnWidth}
+            height={this.columnWidth}
+          />
+        )}
+      />
+    );
+
+    switch (viewMode) {
+      case 'grid':
+        return gridView;
+      case 'list':
+        return listView;
+      case 'tile':
+        return tileView;
+      default:
+        return gridView;
+    }
+  }
+
   render() {
     const {
       items,
       filteredItems,
       count,
-      currentItem,
-      view,
+      viewMode,
     } = this.state;
-
-    const {
-      itemType,
-      urlprefix,
-      footerContent,
-    } = this.props;
-
-    let detailTemplate;
-    switch (itemType) {
-      case 'icon':
-        detailTemplate = (<IconDetailTemplate {...currentItem} urlprefix={urlprefix} />);
-        break;
-      case 'image':
-        detailTemplate = (<ImageDetailTemplate {...currentItem} urlprefix={urlprefix} />);
-        break;
-      case 'component':
-        detailTemplate = (<ComponentDetailTemplate {...currentItem} urlprefix={urlprefix} />);
-        break;
-      default:
-        detailTemplate = (<IconDetailTemplate {...currentItem} urlprefix={urlprefix} />);
-    }
 
     return (
       <div className="Gallery ms-Grid">
-        <div className="ms-Grid-row Gallery-search">
+        <div className="ms-Grid-row Gallery-header">
           <div className="ms-Grid-col ms-sm12 ms-md8 ms-lg6 ms-xl4">
             <SearchBox
               placeholder="Search icons"
@@ -132,54 +246,45 @@ class Gallery extends React.Component {
               {`Displaying ${count} result(s).`}
             </p>
           </div>
-        </div>
-        <div className="Gallery-body ms-Grid-row">
-          <div className="ms-Grid-col ms-lg9">
-            <List
-              items={filteredItems}
-              renderedWindowsAhead={RENDERED_WINDOWS_AHEAD}
-              getItemCountForPage={this.getItemCountForPage}
-              getPageHeight={this.getPageHeight}
-              onRenderCell={(item) => {
-                let styledItem;
-                if (view === 'grid') {
-                  styledItem = (
-                    <div style={{
-                      width: `${this.columnWidth}px`,
-                      height: `${this.columnWidth}px`,
-                    }}
-                    >
-                      <SmallGridItem
-                        {...item}
-                        urlprefix={urlprefix}
-                        onClick={e => this.onItemClick(e, item)}
-                      />
-                    </div>
-                  );
-                }
-                // TODO: list view
-                return styledItem;
-              }}
+          <div className="ms-Grid-col ms-sm12 ms-md4 ms-lg6 ms-xl4">
+            <CommandBar
+              farItems={[
+                {
+                  key: 'viewMode1',
+                  title: 'Grid view',
+                  ariaLabel: 'Grid view',
+                  checked: viewMode === 'grid',
+                  iconProps: {
+                    iconName: 'GridViewSmall',
+                  },
+                  onClick: () => this.onViewButtonClick('grid'),
+                },
+                {
+                  key: 'viewMode2',
+                  title: 'List view',
+                  ariaLabel: 'List view',
+                  checked: viewMode === 'list',
+                  iconProps: {
+                    iconName: 'BulletedList2',
+                  },
+                  onClick: () => this.onViewButtonClick('list'),
+                },
+                {
+                  key: 'viewMode3',
+                  title: 'Tile view',
+                  ariaLabel: 'Tile view',
+                  checked: viewMode === 'tile',
+                  iconProps: {
+                    iconName: 'PictureTile',
+                  },
+                  onClick: () => this.onViewButtonClick('tile'),
+                },
+              ]}
             />
           </div>
-          <div className="ms-Grid-col ms-lg3 ms-hiddenMdDown">
-            {currentItem ? (
-              <DetailPane
-                header={currentItem.name}
-                imagesrc={`${urlprefix}${currentItem.name}`}
-                urlprefix={urlprefix}
-                footerContent={footerContent}
-              >
-                {detailTemplate}
-              </DetailPane>
-            ) : (
-              <DetailPane
-                footerContent={footerContent}
-              >
-                {'Select an item from the list to view details and get download links.'}
-              </DetailPane>
-            )}
-          </div>
+        </div>
+        <div className="Gallery-body ms-Grid">
+          {this.renderView()}
         </div>
       </div>
     );
@@ -188,13 +293,16 @@ class Gallery extends React.Component {
 
 Gallery.propTypes = {
   itemType: PropTypes.string,
+  viewModes: PropTypes.array,
   items: PropTypes.array.isRequired,
+  fieldNames: PropTypes.array.isRequired,
   urlprefix: PropTypes.string,
   footerContent: PropTypes.object,
 };
 
 Gallery.defaultProps = {
   itemType: 'icon',
+  viewModes: ['grid'],
   urlprefix: IMAGE_PLACEHOLDER,
   footerContent: {},
 };

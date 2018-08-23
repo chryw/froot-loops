@@ -5,9 +5,12 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100%;
+  left: 0;
+  padding: 2rem;
 }
 
-.Gallery-search {
+.Gallery-header {
   flex-shrink: 0;
 }
 
