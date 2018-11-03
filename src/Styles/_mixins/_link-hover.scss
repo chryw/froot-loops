@@ -6,6 +6,7 @@
     font-weight: 600;
     transform: scale(1.05, 1.05);
   }
+
   &::after {
     display: block;
     content: attr(title);

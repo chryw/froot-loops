@@ -1,0 +1,18 @@
+.scroll-wrapper {
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.scroll-sticky {
+  flex-shrink: 0;
+  position: relative;
+}
+
+.scroll-scrollable {
+  overflow-y: auto;
+  position: relative;
+}

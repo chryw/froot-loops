@@ -4,13 +4,13 @@ import SiteNav from '../SiteNav/SiteNav';
 import logo from './assets/logo.svg';
 
 const SiteHeader = () => (
-  <header className="SiteHeader ms-bgColor-neutralPrimary ms-fontColor-white">
-    <div className="SiteHeader-brand">
+  <header className="SiteHeader">
+    <a href="/" className="SiteHeader-brand">
       <img className="SiteHeader-logo" src={logo} alt="D3 Assets" />
       <span className="SiteHeader-name">
         {'D3 Assets'}
       </span>
-    </div>
+    </a>
     <SiteNav />
   </header>
 );

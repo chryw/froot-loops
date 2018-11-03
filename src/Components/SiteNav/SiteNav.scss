@@ -1,81 +1,108 @@
 @import '../../Styles/_variables/_colors';
 @import '../../Styles/_variables/_responsive';
-@import '../../Styles/_mixins/_link-color';
+@import '../../Styles/_mixins';
+
+.SiteNav {
+  position: absolute;
+  top: 100%;
+  width: 100%;
+
+  @media screen and (min-width: $ms-screen-min-md) {
+    height: 6vh;
+    line-height: 6vh;
+    position: relative;
+    top: 0;
+    width: auto;
+  }
+}
 
 .SiteNav-button {
-  position: absolute;
-  height: 4vh;
-  top: 0;
+  color: $ms-color-white;
+  height: 6vh;
   left: 1rem;
-  &>* {
-    height: 4vh;
-  }
-  i {
-    color: $ms-color-white;
+  position: fixed;
+  top: 0;
+
+  &:hover {
+    color: $ms-color-neutralQuaternary;
   }
 }
 
 .SiteNav-menu {
   background-color: $ms-color-neutralLighter;
-  border: 1px solid $ms-color-neutralLight;
   border-bottom: 2px solid $ms-color-neutralDark;
   display: flex;
   flex-wrap: wrap;
-  left: 0;
+  height: 0;
   list-style: none;
   margin: 0;
   max-height: 0;
   opacity: 0;
-  overflow: hidden;
   padding: 0;
-  position: absolute;
-  top: 4vh;
   width: 100%;
+  overflow: hidden;
+
   &.expanded {
+    height: auto;
     max-height: none;
     opacity: 1;
-    z-index: 10000;
   }
-  a {
-    display: block;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    @include link-color($ms-color-neutralPrimary, $ms-color-neutralDark);
-    &:hover,
-    &:focus,
-    &:active {
-      text-decoration: underline;
+
+  @media screen and (min-width: $ms-screen-min-md) {
+    &,
+    &.expanded {
+      background-color: transparent;
+      border-color: transparent;
+      flex-wrap: nowrap;
+      height: auto;
+      max-height: none;
+      opacity: 1;
+      width: auto;
     }
   }
 }
 
 .SiteNav-menuItem {
-  height: 4vh;
-  line-height: 4vh;
+  height: 6vh;
+  max-height: 6vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
   width: 100%;
+  border: 1px dashed transparent;
+  background-color: $ms-color-neutralLighter;
+
+  @media screen and (min-width: $ms-screen-min-md) {
+    width: auto;
+    padding: 0 1rem;
+  }
+
   &:hover,
   &:focus {
-    background-color: $ms-color-neutralLight;
+    background-color: $ms-color-white;
+    border-color: $ms-color-neutralPrimary;
+  }
+
+  &.active {
+    background-color: $ms-color-neutralQuaternaryAlt;
+    height: auto;
+    max-height: none;
   }
 }
 
-@media screen and (min-width: $ms-screen-min-md) {
-  .SiteNav-menu {
-    background-color: transparent;
-    border: 0;
+.SiteNav-menuItemSubmenu {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 100%;
+  height: 0;
+  max-height: 0;
+  opacity: 0;
+
+  &.expanded {
+    height: auto;
     max-height: none;
     opacity: 1;
-    position: relative;
-    top: 0;
-    a {
-      @include link-color($ms-color-white, $ms-color-white);
-    }
-  }
-  .SiteNav-menuItem {
-    width: auto;
-    &:hover,
-    &:focus {
-      background-color: transparent;
-    }
   }
 }

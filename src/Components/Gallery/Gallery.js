@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import './Gallery.css';
 import {
   CommandBar,
+  DefaultButton,
   DetailsList,
+  IconButton,
   List,
   SearchBox,
 } from 'office-ui-fabric-react/lib/index';
@@ -222,68 +224,57 @@ class Gallery extends React.Component {
     } = this.state;
 
     return (
-      <div className="Gallery ms-Grid">
-        <div className="ms-Grid-row Gallery-header">
-          <div className="ms-Grid-col ms-sm12 ms-md8 ms-lg6 ms-xl4">
-            <SearchBox
-              placeholder="Search icons"
-              onChange={(value) => {
-                const query = value.toLowerCase();
-                this.setState({
-                  filteredItems: items.filter((item) => {
-                    const metadata = `${item.name.toLowerCase()} ${item.keywords ? item.keywords.join(' ').toLowerCase() : ''}`;
-                    return metadata.indexOf(query) >= 0;
-                  }),
-                });
-                this.setState({
-                  count: filteredItems.length,
-                });
-              }}
-            />
-          </div>
-          <div className="ms-Grid-col ms-sm12 ms-md4 ms-lg6 ms-xl4">
-            <p>
-              {`Displaying ${count} result(s).`}
-            </p>
-          </div>
-          <div className="ms-Grid-col ms-sm12 ms-md4 ms-lg6 ms-xl4">
-            <CommandBar
-              farItems={[
-                {
-                  key: 'viewMode1',
-                  title: 'Grid view',
-                  ariaLabel: 'Grid view',
-                  checked: viewMode === 'grid',
-                  iconProps: {
-                    iconName: 'GridViewSmall',
-                  },
-                  onClick: () => this.onViewButtonClick('grid'),
-                },
-                {
-                  key: 'viewMode2',
-                  title: 'List view',
-                  ariaLabel: 'List view',
-                  checked: viewMode === 'list',
-                  iconProps: {
-                    iconName: 'BulletedList2',
-                  },
-                  onClick: () => this.onViewButtonClick('list'),
-                },
-                {
-                  key: 'viewMode3',
-                  title: 'Tile view',
-                  ariaLabel: 'Tile view',
-                  checked: viewMode === 'tile',
-                  iconProps: {
-                    iconName: 'PictureTile',
-                  },
-                  onClick: () => this.onViewButtonClick('tile'),
-                },
-              ]}
-            />
-          </div>
+      <div className="Gallery ms-Grid scroll-wrapper">
+        <div className="ms-Grid-row Gallery-header scroll-sticky">
+          <CommandBar
+            className="ms-Grid-col ms-sm12"
+            items={[
+              {
+                key: 'search',
+                onRender: () => (
+                  <SearchBox
+                    placeholder="Search icons"
+                    onChange={(query) => {
+                      this.setState({
+                        filteredItems: items.filter((item) => {
+                          const metadata = `${item.name.toLowerCase()} ${item.keywords ? item.keywords.join(' ').toLowerCase() : ''}`;
+                          return metadata.indexOf(query.toLowerCase()) >= 0;
+                        }),
+                      });
+                      this.setState({
+                        count: filteredItems.length,
+                      });
+                    }}
+                  />
+                ),
+              },
+            ]}
+            overflowItems={[
+              {
+                key: 'viewMode1',
+                name: 'Grid view',
+                icon: 'GridViewSmall',
+                checked: (viewMode === 'grid'),
+                onClick: () => this.onViewButtonClick('grid'),
+              },
+              {
+                key: 'viewMode2',
+                name: 'List view',
+                icon: 'BulletedList2',
+                checked: (viewMode === 'list'),
+                onClick: () => this.onViewButtonClick('list'),
+              },
+              {
+                key: 'viewMode3',
+                name: 'Tile view',
+                icon: 'PictureTile',
+                checked: (viewMode === 'tile'),
+                onClick: () => this.onViewButtonClick('tile'),
+              },
+            ]}
+          />
         </div>
-        <div className="Gallery-body ms-Grid">
+        <div className="Gallery-body ms-Grid scroll-scrollable">
           {this.renderView()}
         </div>
       </div>

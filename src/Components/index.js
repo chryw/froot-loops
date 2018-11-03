@@ -3,7 +3,6 @@ import Gallery from './Gallery/Gallery';
 import Page from './Page/Page';
 import SiteHeader from './SiteHeader/SiteHeader';
 import SiteNav from './SiteNav/SiteNav';
-import SmallGridItem from './SmallGridItem/SmallGridItem';
 
 export {
   DetailPane,
@@ -11,5 +10,4 @@ export {
   SiteHeader,
   Page,
   SiteNav,
-  SmallGridItem,
 };

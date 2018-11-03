@@ -2,39 +2,39 @@
 @import '../../Styles/_variables/_responsive';
 
 .SiteHeader {
-  height: 4vh;
-  line-height: 4vh;
+  height: 6vh;
   width: 100%;
   z-index: 10000;
   display: flex;
   flex-wrap: wrap;
   flex-shrink: 0;
+  position: relative;
+  background-color: $ms-color-neutralDark;
 }
 
 .SiteHeader-brand {
-  height: 4vh;
-  line-height: 4vh;
+  height: 6vh;
+  line-height: 6vh;
   display: flex;
   justify-content: center;
   width: 100%;
+  text-decoration: none;
+  color: $ms-color-white;
 }
 
 .SiteHeader-logo {
-  height: 4vh;
+  width: 50px;
   padding-top: 8px;
   padding-bottom: 8px;
-  margin-right: 8px;
-}
-
-.SiteHeader-name {
-  font-size: 18px;
+  margin-right: 4px;
 }
 
 @media screen and (min-width: $ms-screen-min-md) {
   .SiteHeader {
     flex-wrap: nowrap;
   }
+
   .SiteHeader-brand {
-    width: 150px;
+    width: 200px;
   }
 }

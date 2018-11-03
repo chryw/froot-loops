@@ -13,7 +13,7 @@ const App = () => (
   <Router basename="/">
     <div className="App ms-Fabric ms-normalize" dir="ltr">
       <SiteHeader />
-      <div className="Content">
+      <div className="Site-body">
         <Route exact path="/" component={Home} />
         <Route path="/icons" component={Icons} />
         <Route path="/illustrations" component={Illustrations} />
