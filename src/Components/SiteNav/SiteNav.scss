@@ -2,102 +2,65 @@
 @import '../../Styles/_variables/_responsive';
 @import '../../Styles/_mixins';
 
-.SiteNav {
-  position: absolute;
-  top: 100%;
-  width: 100%;
-
-  @media screen and (min-width: $ms-screen-min-md) {
-    height: 6vh;
-    line-height: 6vh;
-    position: relative;
-    top: 0;
-    width: auto;
-  }
-}
-
-.SiteNav-button {
-  color: $ms-color-white;
-  height: 6vh;
-  left: 1rem;
-  position: fixed;
-  top: 0;
-
-  &:hover {
-    color: $ms-color-neutralQuaternary;
-  }
-}
-
-.SiteNav-menu {
-  background-color: $ms-color-neutralLighter;
-  border-bottom: 2px solid $ms-color-neutralDark;
-  display: flex;
-  flex-wrap: wrap;
-  height: 0;
+.SiteNav-Menu {
+  background-color: $ms-color-neutralLight;
   list-style: none;
+  padding: 0;
   margin: 0;
+  overflow: hidden;
+  height: 0;
   max-height: 0;
   opacity: 0;
-  padding: 0;
-  width: 100%;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-content: stretch;
 
   &.expanded {
+    height: 100%;
+    max-height: none;
+    border-bottom: 2px solid $ms-color-neutralPrimary;
+  }
+
+  @media screen and (min-width: $ms-screen-min-md) {
     height: auto;
     max-height: none;
     opacity: 1;
-  }
-
-  @media screen and (min-width: $ms-screen-min-md) {
-    &,
-    &.expanded {
-      background-color: transparent;
-      border-color: transparent;
-      flex-wrap: nowrap;
-      height: auto;
-      max-height: none;
-      opacity: 1;
-      width: auto;
-    }
+    flex-direction: row;
   }
 }
 
-.SiteNav-menuItem {
-  height: 6vh;
-  max-height: 6vh;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  width: 100%;
-  border: 1px dashed transparent;
-  background-color: $ms-color-neutralLighter;
+.SiteNav-MenuItem,
+.SiteNav-SubMenuItem {
+  cursor: pointer;
+  position: relative;
+
+  & > a,
+  & > button {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    background: none;
+    border: none;
+  }
 
   @media screen and (min-width: $ms-screen-min-md) {
     width: auto;
-    padding: 0 1rem;
-  }
-
-  &:hover,
-  &:focus {
-    background-color: $ms-color-white;
-    border-color: $ms-color-neutralPrimary;
-  }
-
-  &.active {
-    background-color: $ms-color-neutralQuaternaryAlt;
-    height: auto;
-    max-height: none;
   }
 }
 
-.SiteNav-menuItemSubmenu {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  width: 100%;
+.SiteNav-MenuItemChevron {
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.SiteNav-SubMenu {
+  background-color: $ms-color-neutralLighter;
+  list-style: none;
+  padding: 0;
+  margin: 0;
   height: 0;
   max-height: 0;
+  overflow: hidden;
   opacity: 0;
 
   &.expanded {

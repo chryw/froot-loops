@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import SiteHeader from './Components/SiteHeader/SiteHeader';
+import SiteNav from './Components/SiteNav/SiteNav';
+import AppState from './AppState';
 import {
   Home,
   Icons,
@@ -12,7 +13,7 @@ import './App.css';
 const App = () => (
   <Router basename="/">
     <div className="App ms-Fabric ms-normalize" dir="ltr">
-      <SiteHeader />
+      <SiteNav pages={AppState.pages} />
       <div className="Site-body">
         <Route exact path="/" component={Home} />
         <Route path="/icons" component={Icons} />
