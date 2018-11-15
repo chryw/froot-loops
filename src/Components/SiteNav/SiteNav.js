@@ -6,6 +6,7 @@ import {
   Icon,
   Link,
 } from 'office-ui-fabric-react/lib/index';
+import Submenu from '../Submenu/Submenu';
 
 class SiteNav extends React.Component {
   constructor() {
@@ -15,7 +16,15 @@ class SiteNav extends React.Component {
       isMenuExpanded: false,
     };
 
-    // Detect if clicked inside or outside
+    // Toggle the menu when hamburger button is clicked
+    this.onMenuButtonClick = () => {
+      const { isMenuExpanded } = this.state;
+      this.setState({
+        isMenuExpanded: !isMenuExpanded,
+      });
+    };
+
+    // Detect if clicked outside of SiteNav
     this.onSiteNavClick = (e) => {
       if (this.refSiteNav.contains(e.target)) {
         return;
@@ -30,17 +39,9 @@ class SiteNav extends React.Component {
       });
     };
 
-    // Toggle the menu when hamburger button is clicked
-    this.onMenuButtonClick = () => {
-      const { isMenuExpanded } = this.state;
-      this.setState({
-        isMenuExpanded: !isMenuExpanded,
-      });
-    };
-
     // Toggle submenu when category item is clicked
     this.onCategoryButtonClick = (pageTitle) => {
-      const target = document.getElementById(`SiteNav-SubMenu-${pageTitle}`);
+      const target = document.getElementById(`Submenu-${pageTitle}`);
       target.classList.toggle('expanded');
     };
 
@@ -75,61 +76,49 @@ class SiteNav extends React.Component {
       >
         {/* Button for toggling nav menu on mobile view */}
         <IconButton
-          className="ms-hiddenMdUp"
-          iconProps={isMenuExpanded ? { iconName: 'Clear' } : { iconName: 'CollapseMenu' }}
-          title="Menu button"
           ariaLabel="Menu button"
+          className="SiteNav-MenuButton ms-hiddenMdUp"
+          iconProps={isMenuExpanded ? { iconName: 'Clear' } : { iconName: 'CollapseMenu' }}
           onClick={this.onMenuButtonClick}
+          title="Menu button"
         />
         {/* Nav menu */}
         <ul
-          className={`SiteNav-Menu ms-fadeIn100${isMenuExpanded ? ' expanded' : ''}`}
+          className={`SiteNav-Menu${isMenuExpanded ? ' expanded' : ''}`}
         >
           {/* Iterate through pages */}
           {pages.map(page => (
             <li
-              className={`SiteNav-MenuItem${page.isHomePage ? ' home' : ''}${this.isActivePage(page) ? ' active' : ''}`}
+              className={`SiteNav-MenuItem MenuItem${page.isHomePage ? ' home' : ''}${this.isActivePage(page) ? ' active' : ''}`}
               key={`SiteNav-MenuItem-${page.title}`}
+              ref={(node) => { this.refMenuItem = node; }}
             >
               {page.url ? (
                 // Render regular link
-                <Link href={page.url}>
+                <Link
+                  href={page.url}
+                >
                   {page.title}
                 </Link>
               ) : (
                 // Render button for category item
                 <button
-                  type="button"
                   onClick={() => this.onCategoryButtonClick(page.title)}
+                  type="button"
                 >
                   {page.title}
-                  {page.isCategory ? (
-                    // Render chevron icon for category item
-                    <Icon iconName="ChevronDown" className="SiteNav-MenuItemChevron" />
-                  ) : ''}
+                  <Icon
+                    iconName="ChevronDown"
+                    className="SiteNav-MenuItem-Chevron"
+                  />
                 </button>
               )}
               {page.isCategory && page.pages ? (
                 // Render submenu for category item
-                <ul
-                  id={`SiteNav-SubMenu-${page.title}`}
-                  className="SiteNav-SubMenu"
-                >
-                  {/* Iterate through subpages */}
-                  {page.pages.map(subPage => (
-                    <li
-                      // Toggle active style for current page
-                      className={`SiteNav-SubMenuItem${this.isActivePage(subPage) ? ' active' : ''}`}
-                      key={`SiteNav-SubMenuItem-${subPage.title}`}
-                    >
-                      <Link
-                        href={subPage.url}
-                      >
-                        {subPage.title}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
+                <Submenu
+                  id={`Submenu-${page.title}`}
+                  items={page.pages}
+                />
               ) : ''}
             </li>
           ))}

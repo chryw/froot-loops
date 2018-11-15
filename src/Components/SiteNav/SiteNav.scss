@@ -2,70 +2,53 @@
 @import '../../Styles/_variables/_responsive';
 @import '../../Styles/_mixins';
 
+.SiteNav {
+  background-color: $ms-color-neutralPrimary;
+
+  // Need to be this specific to override the previous button style
+  .SiteNav-MenuButton {
+    width: auto;
+    color: $ms-color-white;
+  }
+}
+
+// First level menu
 .SiteNav-Menu {
-  background-color: $ms-color-neutralLight;
   list-style: none;
   padding: 0;
   margin: 0;
-  overflow: hidden;
   height: 0;
   max-height: 0;
   opacity: 0;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-content: stretch;
 
-  &.expanded {
-    height: 100%;
-    max-height: none;
-    border-bottom: 2px solid $ms-color-neutralPrimary;
+  // Drawer style on small screen
+  @media screen and (max-width: $ms-screen-max-sm) {
+    &.expanded {
+      height: 100%;
+      max-height: none;
+      opacity: 1;
+      border-bottom: 2px solid $ms-color-neutralPrimary;
+      background-color: $ms-color-neutralLighter;
+    }
   }
 
+  // Horizontal bar on big screen
   @media screen and (min-width: $ms-screen-min-md) {
     height: auto;
     max-height: none;
     opacity: 1;
     flex-direction: row;
+    overflow: visible;
+    background-color: $ms-color-white;
   }
 }
 
-.SiteNav-MenuItem,
-.SiteNav-SubMenuItem {
-  cursor: pointer;
-  position: relative;
-
-  & > a,
-  & > button {
-    display: block;
-    width: 100%;
-    padding: 1rem;
-    background: none;
-    border: none;
-  }
-
-  @media screen and (min-width: $ms-screen-min-md) {
-    width: auto;
-  }
-}
-
-.SiteNav-MenuItemChevron {
+.SiteNav-MenuItem-Chevron {
+  float: right;
   margin-left: 8px;
-  vertical-align: middle;
-}
-
-.SiteNav-SubMenu {
-  background-color: $ms-color-neutralLighter;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  height: 0;
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-
-  &.expanded {
-    height: auto;
-    max-height: none;
-    opacity: 1;
-  }
+  font-size: 8px;
 }
