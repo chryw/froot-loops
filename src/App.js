@@ -12,9 +12,11 @@ import './App.css';
 
 const App = () => (
   <Router basename="/">
-    <div className="App ms-Fabric ms-normalize" dir="ltr">
+    <div className="App" dir="ltr">
       <SiteNav pages={AppState.pages} />
-      <div className="Site-body">
+      <div
+        className="ms-Fabric ms-normalize"
+      >
         <Route exact path="/" component={Home} />
         <Route path="/icons" component={Icons} />
         <Route path="/illustrations" component={Illustrations} />

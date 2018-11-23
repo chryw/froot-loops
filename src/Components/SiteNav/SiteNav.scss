@@ -1,14 +1,85 @@
-@import '../../Styles/_variables/_colors';
-@import '../../Styles/_variables/_responsive';
+@import '../../Styles/_variables';
 @import '../../Styles/_mixins';
 
 .SiteNav {
-  background-color: $ms-color-neutralPrimary;
+  background-color: $ms-color-white;
+  position: relative;
+  align-items: center;
+  font-size: 13px;
+  height: 54px;
 
-  // Need to be this specific to override the previous button style
-  .SiteNav-MenuButton {
-    width: auto;
-    color: $ms-color-white;
+  @media screen and (min-width: $ms-screen-min-md) {
+    display: flex;
+    align-items: center;
+    padding: 0 5%;
+  }
+
+  a {
+    &,
+    &:visited {
+      color: $ms-color-neutralPrimary;
+    }
+  }
+
+  .ms-Button {
+    height: 100%;
+    padding: 1rem;
+    background: none;
+  }
+}
+
+.SiteNav-Brand {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+
+  @media screen and (max-width: $ms-screen-max-sm) {
+    @include align-center;
+  }
+}
+
+.MicrosoftLogo,
+.D3AssetsLogo {
+  display: block;
+  margin-right: 24px;
+  height: 24px;
+
+  .SpriteImage {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.MicrosoftLogo {
+  width: 24px;
+}
+
+.D3AssetsLogo {
+  width: 103px;
+  position: relative;
+
+  &::before {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-left: 2px solid $ms-color-neutralPrimary;
+    height: 100%;
+  }
+
+  .SpriteImage {
+    margin-left: 16px;
+  }
+}
+
+.SiteNav-MobileButton {
+  width: 48px;
+  height: 48px;
+  margin: 1px;
+
+  .ms-Button-icon {
+    font-size: 20px;
   }
 }
 
@@ -17,20 +88,15 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  height: 0;
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  display: flex;
+  display: none;
   flex-direction: column;
   align-content: stretch;
 
   // Drawer style on small screen
   @media screen and (max-width: $ms-screen-max-sm) {
-    &.expanded {
-      height: 100%;
-      max-height: none;
-      opacity: 1;
+    // Use aria-expanded instead of ".expanded" class is better a11y practice
+    &[aria-expanded=true] {
+      display: flex;
       border-bottom: 2px solid $ms-color-neutralPrimary;
       background-color: $ms-color-neutralLighter;
     }
@@ -38,17 +104,41 @@
 
   // Horizontal bar on big screen
   @media screen and (min-width: $ms-screen-min-md) {
-    height: auto;
-    max-height: none;
-    opacity: 1;
+    display: flex;
     flex-direction: row;
     overflow: visible;
     background-color: $ms-color-white;
   }
 }
 
-.SiteNav-MenuItem-Chevron {
-  float: right;
-  margin-left: 8px;
-  font-size: 8px;
+.SiteNav-MenuItem {
+  background-color: $ms-color-neutralLighter;
+
+  &:hover,
+  &:focus-within {
+    background-color: $ms-color-neutralLight;
+  }
+
+  @media screen and (min-width: $ms-screen-min-md) {
+    background-color: $ms-color-white;
+
+    &:not(:last-child) {
+      margin-right: 1px;
+    }
+  }
+
+  @media screen and (max-width: $ms-screen-max-sm) {
+    &:not(:last-child) {
+      border-bottom: 1px solid $ms-color-neutralQuaternaryAlt;
+    }
+  }
+
+  .ms-Button {
+    width: 100%;
+    text-align: left;
+
+    & > div {
+      justify-content: left;
+    }
+  }
 }

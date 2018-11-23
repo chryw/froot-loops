@@ -2,12 +2,6 @@ const AppState = {
   appTitle: 'D3 Assets',
   pages: [
     {
-      title: 'D3 Assets',
-      url: '/',
-      isHomePage: true,
-      component: require('./Pages/Home/Home'),
-    },
-    {
       title: 'Icons',
       component: require('./Pages/Icons/Icons'),
       isCategory: true,

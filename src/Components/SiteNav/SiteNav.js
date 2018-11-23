@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import './SiteNav.css';
 import {
   IconButton,
-  Icon,
   Link,
+  DefaultButton,
 } from 'office-ui-fabric-react/lib/index';
-import Submenu from '../Submenu/Submenu';
+import DropdownMenu from '../DropdownMenu/DropdownMenu';
+import SpriteImage from '../SpriteImage/SpriteImage';
+import { ReactComponent as ImageSprite } from './assets/sprite.svg';
 
 class SiteNav extends React.Component {
   constructor() {
@@ -17,7 +19,7 @@ class SiteNav extends React.Component {
     };
 
     // Toggle the menu when hamburger button is clicked
-    this.onMenuButtonClick = () => {
+    this.onMobileButtonClick = () => {
       const { isMenuExpanded } = this.state;
       this.setState({
         isMenuExpanded: !isMenuExpanded,
@@ -39,12 +41,6 @@ class SiteNav extends React.Component {
       });
     };
 
-    // Toggle submenu when category item is clicked
-    this.onCategoryButtonClick = (pageTitle) => {
-      const target = document.getElementById(`Submenu-${pageTitle}`);
-      target.classList.toggle('expanded');
-    };
-
     // Check if the page is current active page by comparing url
     this.isActivePage = page => (page.url === document.location.pathname);
   }
@@ -55,7 +51,7 @@ class SiteNav extends React.Component {
   }
 
   componentWillUnmount() {
-    // Remove listener when no longer neede (actually useless? because SiteNav is always mounted...)
+    // Remove listener when no longer needed
     document.removeEventListener('click', this.onSiteNavClick, false);
   }
 
@@ -74,52 +70,63 @@ class SiteNav extends React.Component {
         // This ref will be used for detecting click inside and outside
         ref={(node) => { this.refSiteNav = node; }}
       >
+        {/* Put brand image sprite in DOM. Refered via symbol id. */}
+        <ImageSprite
+          style={{
+            display: 'none',
+          }}
+        />
         {/* Button for toggling nav menu on mobile view */}
         <IconButton
           ariaLabel="Menu button"
-          className="SiteNav-MenuButton ms-hiddenMdUp"
-          iconProps={isMenuExpanded ? { iconName: 'Clear' } : { iconName: 'CollapseMenu' }}
-          onClick={this.onMenuButtonClick}
+          className="SiteNav-MobileButton ms-hiddenMdUp"
+          iconProps={isMenuExpanded ? { iconName: 'Clear' } : { iconName: 'GlobalNavButton' }}
+          onClick={this.onMobileButtonClick}
           title="Menu button"
         />
+        <div
+          className="SiteNav-Brand"
+        >
+          {/* Microsoft Logo | Redirects to microsoft.com */}
+          <Link
+            href="https://www.microsoft.com/"
+            target="_blank"
+            className="MicrosoftLogo"
+          >
+            <SpriteImage name="BrandMicrosoft_mark" />
+          </Link>
+          {/* D3 Assets logo | Home */}
+          <Link
+            href="/"
+            className="D3AssetsLogo"
+          >
+            <SpriteImage name="BrandD3Assets" />
+          </Link>
+        </div>
         {/* Nav menu */}
         <ul
-          className={`SiteNav-Menu${isMenuExpanded ? ' expanded' : ''}`}
+          className="SiteNav-Menu"
+          aria-expanded={isMenuExpanded}
         >
           {/* Iterate through pages */}
           {pages.map(page => (
             <li
-              className={`SiteNav-MenuItem MenuItem${page.isHomePage ? ' home' : ''}${this.isActivePage(page) ? ' active' : ''}`}
+              className={`SiteNav-MenuItem${page.isHomePage ? ' home' : ''}${this.isActivePage(page) ? ' active' : ''}`}
               key={`SiteNav-MenuItem-${page.title}`}
-              ref={(node) => { this.refMenuItem = node; }}
             >
               {page.url ? (
                 // Render regular link
-                <Link
+                <DefaultButton
                   href={page.url}
-                >
-                  {page.title}
-                </Link>
+                  text={page.title}
+                />
               ) : (
-                // Render button for category item
-                <button
-                  onClick={() => this.onCategoryButtonClick(page.title)}
-                  type="button"
-                >
-                  {page.title}
-                  <Icon
-                    iconName="ChevronDown"
-                    className="SiteNav-MenuItem-Chevron"
-                  />
-                </button>
-              )}
-              {page.isCategory && page.pages ? (
-                // Render submenu for category item
-                <Submenu
-                  id={`Submenu-${page.title}`}
+                <DropdownMenu
+                  label={page.title}
+                  className="SiteNav-Submenu"
                   items={page.pages}
                 />
-              ) : ''}
+              )}
             </li>
           ))}
         </ul>

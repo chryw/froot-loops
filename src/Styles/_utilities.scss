@@ -1,3 +1,5 @@
+@import './_mixins/_align-center';
+
 .scroll-wrapper {
   display: flex;
   flex-direction: column;
@@ -15,4 +17,8 @@
 .scroll-scrollable {
   overflow-y: auto;
   position: relative;
+}
+
+.align-center {
+  @include align-center;
 }

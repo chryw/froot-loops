@@ -25,3 +25,6 @@ src/**/*.css
 
 # cache
 /.cache
+
+# design files
+/_design
