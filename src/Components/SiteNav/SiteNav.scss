@@ -14,17 +14,17 @@
     padding: 0 5%;
   }
 
-  a {
-    &,
-    &:visited {
-      color: $ms-color-neutralPrimary;
-    }
-  }
-
+  // Override Fabric button style
   .ms-Button {
     height: 100%;
     padding: 1rem;
     background: none;
+    width: 100%;
+    text-align: left;
+
+    & > div {
+      justify-content: left;
+    }
   }
 }
 
@@ -73,6 +73,7 @@
   }
 }
 
+// Hamburger menu button
 .SiteNav-MobileButton {
   width: 48px;
   height: 48px;
@@ -130,15 +131,6 @@
   @media screen and (max-width: $ms-screen-max-sm) {
     &:not(:last-child) {
       border-bottom: 1px solid $ms-color-neutralQuaternaryAlt;
-    }
-  }
-
-  .ms-Button {
-    width: 100%;
-    text-align: left;
-
-    & > div {
-      justify-content: left;
     }
   }
 }

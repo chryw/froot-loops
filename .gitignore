@@ -28,3 +28,6 @@ src/**/*.css
 
 # design files
 /_design
+
+# environment variables
+.env
