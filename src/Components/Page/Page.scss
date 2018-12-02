@@ -1,3 +1,23 @@
-.Page-body {
-  padding: 0 2rem;
+@import '../../Styles/_variables';
+@import '../../Styles/_mixins';
+
+.Page-header {
+  height: 128px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  @media screen and (min-width: $ms-screen-min-md) {
+    height: 160px;
+  }
+}
+
+.Page-title {
+  margin: 0;
+  font-weight: 300;
+
+  @media screen and (min-width: $ms-screen-min-md) {
+    font-weight: 250;
+    font-size: 3rem;
+  }
 }

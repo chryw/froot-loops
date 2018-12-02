@@ -4,27 +4,13 @@
 .SiteNav {
   background-color: $ms-color-white;
   position: relative;
-  align-items: center;
   font-size: 13px;
   height: 54px;
+  z-index: $ms-zIndex-5;
 
   @media screen and (min-width: $ms-screen-min-md) {
     display: flex;
     align-items: center;
-    padding: 0 5%;
-  }
-
-  // Override Fabric button style
-  .ms-Button {
-    height: 100%;
-    padding: 1rem;
-    background: none;
-    width: 100%;
-    text-align: left;
-
-    & > div {
-      justify-content: left;
-    }
   }
 }
 
@@ -131,6 +117,19 @@
   @media screen and (max-width: $ms-screen-max-sm) {
     &:not(:last-child) {
       border-bottom: 1px solid $ms-color-neutralQuaternaryAlt;
+    }
+  }
+
+  // Override Fabric button style
+  .ms-Button {
+    height: 100%;
+    background: none;
+    text-align: left;
+    padding: 1rem;
+    width: 100%;
+
+    & > div {
+      justify-content: left;
     }
   }
 }

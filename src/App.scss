@@ -1,2 +1,23 @@
 @import './Styles/_variables';
 @import './Styles/_mixins';
+
+.SiteNav,
+.Page-header,
+.Page-body,
+.SiteFooter {
+  padding: 1rem;
+
+  @media screen and (min-width: $ms-screen-min-md) {
+    padding: 1rem 5%;
+  }
+
+  @media screen and (min-width: $ms-screen-min-xxl) {
+    padding: 1rem 10%;
+  }
+}
+
+.SiteNav {
+  @media screen and (max-width: $ms-screen-max-sm) {
+    padding: 0;
+  }
+}

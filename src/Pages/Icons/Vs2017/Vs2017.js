@@ -1,23 +1,10 @@
 import React from 'react';
 import { Link, Image, ImageFit } from 'office-ui-fabric-react/lib/index';
+import Page from '../../../Components/Page/Page';
 import Gallery from '../../../Components/Gallery/Gallery';
 import data from './assets/data.json';
 
 const urlprefix = 'https://via.placeholder.com/500/dadada/000000';
-
-const footerContent = (
-  <div>
-    <p>
-      {'Some of these images are offered in various sizes and color schemes although only preview image is displayed in the catalog. The same usage restrictions apply to all variations of a given image. As part of a visual language, the images (or any part of the icons) must be used in a manner consistent with the image name or concept description.'}
-    </p>
-    <p>
-      {'Download '}
-      <Link href="http://download.microsoft.com/download/0/6/0/0607D8EA-9BB7-440B-A36A-A24EB8C9C67E/Visual%20Studio%202017%20Image%20Library%20EULA.RTF" download>
-        {'Visual Studio 2017 Image Library EULA'}
-      </Link>
-    </p>
-  </div>
-);
 
 const fieldNames = [
   {
@@ -88,14 +75,15 @@ const fieldNames = [
 ];
 
 const Vs2017 = () => (
-  <Gallery
-    items={data}
-    itemType="icon"
-    viewModes={['grid', 'list']}
-    urlprefix={urlprefix}
-    fieldNames={fieldNames}
-    footerContent={footerContent}
-  />
+  <Page
+    title="Visual Studio 2017 icons"
+  >
+    <Gallery
+      items={data}
+      urlprefix={urlprefix}
+      fieldNames={fieldNames}
+    />
+  </Page>
 );
 
 export default Vs2017;

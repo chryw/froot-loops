@@ -1,4 +1,4 @@
-import React, { lazy } from 'react';
+import { lazy } from 'react';
 
 const AppState = {
   appTitle: 'D3 Assets',

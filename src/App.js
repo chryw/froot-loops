@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
 import SiteNav from './Components/SiteNav/SiteNav';
 import AppState from './AppState';
@@ -47,15 +47,11 @@ class App extends React.Component {
     const { routes } = this.state;
     return (
       <Router basename="/">
-        <div className="App" dir="ltr">
+        <div className="App ms-Fabric ms-normalize" dir="ltr">
           <SiteNav pages={AppState.pages} />
-          <div
-            className="ms-Fabric ms-normalize"
-          >
-            <Suspense fallback={<div>Loading...</div>}>
-              {routes}
-            </Suspense>
-          </div>
+          <Suspense fallback={<Spinner size={SpinnerSize.large} label="Loading..." />}>
+            {routes}
+          </Suspense>
         </div>
       </Router>
     );
