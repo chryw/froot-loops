@@ -28,7 +28,7 @@ class SiteNav extends React.Component {
 
     // Detect if clicked outside of SiteNav
     this.onSiteNavClick = (e) => {
-      if (this.refSiteNav.contains(e.target)) {
+      if (this.siteNavRef.current.contains(e.target)) {
         return;
       }
       this.onSiteNavClickOutside();
@@ -46,6 +46,9 @@ class SiteNav extends React.Component {
   }
 
   componentWillMount() {
+    // Create ref
+    this.siteNavRef = React.createRef();
+
     // Add listener to detect click inside or outside SiteNav element
     document.addEventListener('click', this.onSiteNavClick, false);
   }
@@ -68,7 +71,7 @@ class SiteNav extends React.Component {
       <nav
         className="SiteNav"
         // This ref will be used for detecting click inside and outside
-        ref={(node) => { this.refSiteNav = node; }}
+        ref={this.siteNavRef}
       >
         {/* Put brand image sprite in DOM. Refered via symbol id. */}
         <ImageSprite

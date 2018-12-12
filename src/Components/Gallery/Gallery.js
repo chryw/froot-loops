@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import {
   SearchBox,
 } from 'office-ui-fabric-react/lib/index';
-import GridView from './GridView/GridView';
-import ListView from './ListView/ListView';
+import GridView from '../GridView/GridView';
+import ListView from '../ListView/ListView';
 import './Gallery.css';
 
 class Gallery extends React.Component {
@@ -62,7 +62,7 @@ class Gallery extends React.Component {
     } = this.state;
 
     const {
-      fieldNames,
+      itemProps,
     } = this.props;
 
     switch (viewMode) {
@@ -78,7 +78,7 @@ class Gallery extends React.Component {
         return (
           <ListView
             items={filteredItems}
-            fieldNames={fieldNames}
+            fieldNames={itemProps}
           />
         );
       default:
@@ -124,13 +124,19 @@ class Gallery extends React.Component {
 Gallery.propTypes = {
   items: PropTypes.array.isRequired,
   limit: PropTypes.number,
-  fieldNames: PropTypes.array,
+  itemProps: PropTypes.array,
   urlprefix: PropTypes.string,
 };
 
 Gallery.defaultProps = {
   limit: -1,
-  fieldNames: ['name'],
+  itemProps: [
+    {
+      key: 'key',
+      name: 'name',
+      fieldName: 'fieldName',
+    },
+  ],
   urlprefix: '/',
 };
 

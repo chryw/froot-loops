@@ -1,0 +1,11 @@
+@import '../../Styles/_variables';
+
+.DetailCallout-header {
+  padding: 1rem;
+  font-size: $ms-font-size-xl;
+  font-weight: $ms-font-weight-semilight;
+}
+
+.DetailCallout-body {
+  padding: 0 1rem 1rem;
+}

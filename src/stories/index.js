@@ -9,6 +9,8 @@ import {
   SiteNav,
 } from '../Components';
 
+import AppState from '../AppState';
+
 initializeIcons();
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
@@ -24,4 +26,8 @@ storiesOf('Button', module)
   ));
 
 storiesOf('Navigation', module)
-  .add('SiteNav', () => <SiteNav />);
+  .add('SiteNav', () => (
+    <SiteNav
+      pages={AppState.pages}
+    />
+  ));

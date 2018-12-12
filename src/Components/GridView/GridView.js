@@ -1,19 +1,16 @@
-import React, { Suspense } from 'react';
-import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {
   List,
-  TooltipHost,
-  Image,
-  ImageFit,
 } from 'office-ui-fabric-react/lib/index';
+import GridItem from '../GridItem/GridItem';
 import './GridView.css';
 
 class GridView extends React.Component {
   constructor() {
     super();
 
-    this.ROWS_PER_PAGE = 3;
+    this.ROWS_PER_PAGE = 6;
     this.MAX_ROW_HEIGHT = 100;
     this.IMAGE_PLACEHOLDER = 'https://via.placeholder.com/100/dadada/000000';
     this.ITEM_PADDING = 16;
@@ -30,10 +27,6 @@ class GridView extends React.Component {
     };
 
     this.getPageHeight = () => this.rowHeight * this.ROWS_PER_PAGE;
-
-    this.onItemContextMenu = () => {
-      console.log('Context menu clicked');
-    };
   }
 
   render() {
@@ -42,35 +35,17 @@ class GridView extends React.Component {
       <List
         className="GridView"
         items={items}
-        renderedWindowsAhead={2}
-        renderedWindowsBefore={2}
+        renderedWindowsAhead={1}
+        renderedWindowsBefore={1}
         getItemCountForPage={this.getItemCountForPage}
         getPageHeight={this.getPageHeight}
         onRenderCell={item => (
-          <TooltipHost
-            content={item.name}
-            calloutProps={{ gapSpace: 0 }}
-          >
-            <div
-              ref={this.elementRef}
-              className="GridItem"
-              onContextMenu={this.onItemContextMenu}
-              type="button"
-              style={{
-                width: `${this.columnWidth}px`,
-                height: `${this.rowHeight}px`,
-                padding: `${this.ITEM_PADDING}px`,
-              }}
-            >
-              <Image
-                src={this.IMAGE_PLACEHOLDER}
-                alt={item.name}
-                imageFit={ImageFit.contain}
-                width="100%"
-                height="100%"
-              />
-            </div>
-          </TooltipHost>
+          <GridItem
+            item={item}
+            width={this.columnWidth}
+            height={this.rowHeight}
+            padding={this.ITEM_PADDING}
+          />
         )}
       />
     );

@@ -6,9 +6,9 @@ import data from './assets/data.json';
 
 const urlprefix = 'https://via.placeholder.com/500/dadada/000000';
 
-const fieldNames = [
+const itemProps = [
   {
-    key: 'column1',
+    key: 'image',
     minWidth: 16,
     maxWidth: 16,
     isResizable: false,
@@ -23,7 +23,7 @@ const fieldNames = [
     ),
   },
   {
-    key: 'column2',
+    key: 'name',
     name: 'Name',
     fieldName: 'name',
     minWidth: 100,
@@ -31,7 +31,7 @@ const fieldNames = [
     isResizable: true,
   },
   {
-    key: 'column3',
+    key: 'keywords',
     name: 'Keywords',
     fieldName: 'keywords',
     minWidth: 100,
@@ -42,7 +42,7 @@ const fieldNames = [
     ),
   },
   {
-    key: 'column4',
+    key: 'description',
     name: 'Description',
     fieldName: 'description',
     minWidth: 100,
@@ -50,26 +50,42 @@ const fieldNames = [
     isResizable: true,
   },
   {
-    key: 'column5',
-    name: 'Downloads',
+    key: 'download-svg',
+    name: 'Download SVG',
+    iconProps: {
+      iconName: 'Embed',
+    },
+    fieldName: 'download-svg',
     onRender: item => (
-      <ul className="DetailPane-downloadsList">
-        <li className="DetailPane-downloadsListItem">
-          <Link href={`${urlprefix}${item.name}.svg`} download>
-            {'SVG'}
-          </Link>
-        </li>
-        <li className="DetailPane-downloadsListItem">
-          <Link href={`${urlprefix}${item.name}.png`} download>
-            {'PNG'}
-          </Link>
-        </li>
-        <li className="DetailPane-downloadsListItem">
-          <Link href={`${urlprefix}${item.name}.xaml`} download>
-            {'XAML'}
-          </Link>
-        </li>
-      </ul>
+      <Link href={`${urlprefix}${item.name}_16x.svg`} download>
+        {'Download SVG'}
+      </Link>
+    ),
+  },
+  {
+    key: 'download-xaml',
+    name: 'Download XAML',
+    iconProps: {
+      iconName: 'CodeEdit',
+    },
+    fieldName: 'download-xaml',
+    onRender: item => (
+      <Link href={`${urlprefix}${item.name}_16x.xaml`} download>
+        {'Download XAML'}
+      </Link>
+    ),
+  },
+  {
+    key: 'download-png',
+    name: 'Download PNG',
+    iconProps: {
+      iconName: 'Photo2',
+    },
+    fieldName: 'download-png',
+    onRender: item => (
+      <Link href={`${urlprefix}${item.name}_16x.png`} download>
+        {'Download PNG'}
+      </Link>
     ),
   },
 ];
@@ -81,7 +97,7 @@ const Vs2017 = () => (
     <Gallery
       items={data}
       urlprefix={urlprefix}
-      fieldNames={fieldNames}
+      itemProps={itemProps}
     />
   </Page>
 );

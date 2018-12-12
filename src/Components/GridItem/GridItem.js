@@ -1,120 +1,125 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Callout,
-  DefaultButton,
+  TooltipHost,
   Image,
   ImageFit,
-  Link,
-  TooltipHost,
+  DefaultButton,
 } from 'office-ui-fabric-react/lib/index';
+import DetailCallout from '../DetailCallout/DetailCallout';
 import './GridItem.css';
 
 class GridItem extends React.Component {
   constructor() {
     super();
+
+    this.IMAGE_PLACEHOLDER = 'https://via.placeholder.com/100/dadada/000000';
+
     this.state = {
+      isActive: false,
       isCalloutVisible: false,
     };
-    this.elementRef = React.createRef();
-    this.onContextMenu = this.onContextMenu.bind(this);
-    this.onCalloutDismiss = this.onCalloutDismiss.bind(this);
+
+    this.onClick = () => {
+      const {
+        isActive,
+        isCalloutVisible,
+      } = this.state;
+
+      this.setState({
+        isActive: !isActive,
+        isCalloutVisible: !isCalloutVisible,
+      });
+    };
+
+    this.dismissCallout = (e) => {
+      if (!this.gridItemRef.current.contains(e.target)) {
+        this.setState({
+          isCalloutVisible: false,
+        });
+      }
+    };
   }
 
-  onContextMenu(e) {
-    const { isCalloutVisible } = this.state;
-    this.setState({
-      isCalloutVisible: !isCalloutVisible,
-    });
-    e.preventDefault();
+  componentWillMount() {
+    // Create ref
+    this.gridItemRef = React.createRef();
+
+    // Add listener to detect click inside or outside the element
+    document.addEventListener('click', this.dismissCallout, false);
   }
 
-  onCalloutDismiss() {
-    this.setState({
-      isCalloutVisible: false,
-    });
+  componentWillUnmount() {
+    // Remove listener when no longer needed
+    document.removeEventListener('click', this.dismissCallout, false);
   }
 
   render() {
     const {
-      id,
-      name,
-      width,
-      height,
-      onClick,
-      urlprefix,
-    } = this.props;
-    const {
+      isActive,
       isCalloutVisible,
     } = this.state;
+
+    const {
+      item,
+      width,
+      height,
+      padding,
+    } = this.props;
+
     return (
-      <div ref={this.elementRef}>
-        <TooltipHost
-          content={name}
-          calloutProps={{ gapSpace: 0 }}
+      item ? (
+        <div
+          ref={this.gridItemRef}
         >
-          <DefaultButton
-            className="GridItem"
-            onClick={onClick}
-            onKeyDown={onClick}
-            onContextMenu={this.onContextMenu}
-            type="button"
-            id={`GridItem_${id}`}
-            style={{
-              width,
-              height,
-            }}
+          <TooltipHost
+            content={item.name}
+            calloutProps={{ gapSpace: 0 }}
           >
-            <div className="GridItem-image">
+            <DefaultButton
+              className={`GridItem${isActive ? ' active' : ''}`}
+              type="button"
+              onClick={this.onClick}
+              onKeyDown={this.onClick}
+              style={{
+                width: `${width}px`,
+                height: `${height}px`,
+                padding: `${padding}px`,
+              }}
+            >
               <Image
-                src={`${urlprefix}/${name}.svg`}
-                alt={name}
-                imageFit={ImageFit.fill}
+                src={this.IMAGE_PLACEHOLDER}
+                alt={item.name}
+                imageFit={ImageFit.contain}
                 width="100%"
                 height="100%"
               />
-            </div>
-            <Callout
-              target={this.elementRef.current}
-              className="GridItem-menu ms-ContextualMenu"
-              gapSpace={0}
-              hidden={!isCalloutVisible}
-              onDismiss={this.onCalloutDismiss}
-              setInitialFocus
-            >
-              <ul className="ms-ContextualMenu-list">
-                <li className="ms-ContextualMenu-item">
-                  <Link href={`${urlprefix}/${name}.svg`} download>
-                    {'Download SVG'}
-                  </Link>
-                </li>
-                <li className="ms-ContextualMenu-item">
-                  <Link href={`${urlprefix}/${name}.png`} download>
-                    {'Download PNG'}
-                  </Link>
-                </li>
-              </ul>
-            </Callout>
-          </DefaultButton>
-        </TooltipHost>
-      </div>
+              <DetailCallout
+                item={item}
+                target={this.gridItemRef.current}
+                hidden={!isCalloutVisible}
+              />
+            </DefaultButton>
+          </TooltipHost>
+        </div>
+      ) : (
+        null
+      )
     );
   }
 }
 
 GridItem.propTypes = {
-  id: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
+  item: PropTypes.object.isRequired,
   width: PropTypes.number,
   height: PropTypes.number,
-  urlprefix: PropTypes.string,
-  onClick: PropTypes.func.isRequired,
+  padding: PropTypes.number,
 };
 
 GridItem.defaultProps = {
-  width: 100,
-  height: 100,
-  urlprefix: 'https://via.placeholder.com/500/dadada/000000',
+  width: 96,
+  height: 96,
+  padding: 16,
 };
 
 export default GridItem;

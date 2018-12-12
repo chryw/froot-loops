@@ -1,21 +1,17 @@
-@import '../../Styles/_variables/_colors.scss';
+@import '../../Styles/_variables';
 
+// Show select box
 .GridItem {
-  border: 1px solid transparent;
-  display: block;
-  height: inherit;
-  padding: 0;
-  position: relative;
-  width: inherit;
   background: none;
+  border-radius: 2px;
 
   &:hover,
-  &:focus {
-    border-color: $ms-color-themePrimary;
-    background: none;
+  &:focus,
+  &.active {
+    background-color: $ms-color-neutralLighter;
   }
-}
 
-.GridItem-image {
-  padding: 20%;
+  &.active {
+    border: 1px solid $ms-color-themePrimary;
+  }
 }
