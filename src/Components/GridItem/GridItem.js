@@ -12,6 +12,8 @@ import './GridItem.css';
 class GridItem extends React.Component {
   constructor() {
     super();
+    // Create ref
+    this.gridItemRef = React.createRef();
 
     this.IMAGE_PLACEHOLDER = 'https://via.placeholder.com/100/dadada/000000';
 
@@ -35,6 +37,7 @@ class GridItem extends React.Component {
     this.dismissCallout = (e) => {
       if (!this.gridItemRef.current.contains(e.target)) {
         this.setState({
+          isActive: false,
           isCalloutVisible: false,
         });
       }
@@ -42,16 +45,15 @@ class GridItem extends React.Component {
   }
 
   componentWillMount() {
-    // Create ref
-    this.gridItemRef = React.createRef();
-
-    // Add listener to detect click inside or outside the element
+    // Add listener to detect click and scroll
     document.addEventListener('click', this.dismissCallout, false);
+    document.addEventListener('scroll', this.dismissCallout, false);
   }
 
   componentWillUnmount() {
     // Remove listener when no longer needed
     document.removeEventListener('click', this.dismissCallout, false);
+    document.removeEventListener('scroll', this.dismissCallout, false);
   }
 
   render() {
@@ -94,11 +96,13 @@ class GridItem extends React.Component {
                 width="100%"
                 height="100%"
               />
-              <DetailCallout
-                item={item}
-                target={this.gridItemRef.current}
-                hidden={!isCalloutVisible}
-              />
+              { isCalloutVisible ? (
+                <DetailCallout
+                  item={item}
+                  target={this.gridItemRef.current}
+                  hidden={!isCalloutVisible}
+                />
+              ) : null}
             </DefaultButton>
           </TooltipHost>
         </div>
