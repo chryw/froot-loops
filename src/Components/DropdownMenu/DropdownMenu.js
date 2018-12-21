@@ -65,15 +65,15 @@ class DropdownMenu extends React.Component {
     };
 
     // Detect if clicked outside of DropdownMenu
-    this.onDropdownMenuClick = (e) => {
+    this.onClick = (e) => {
       if (this.refDropdownMenu.contains(e.target)) {
         return;
       }
-      this.onDropdownMenuClickOutside();
+      this.onDismiss();
     };
 
     // Collapse menu if clicked outside
-    this.onDropdownMenuClickOutside = () => {
+    this.onDismiss = () => {
       this.setState({
         isExpanded: false,
       });
@@ -88,14 +88,12 @@ class DropdownMenu extends React.Component {
     };
   }
 
-  componentWillMount() {
-    // Add listener to detect click inside or outside of the DOM element
-    document.addEventListener('click', this.onDropdownMenuClick, false);
+  componentDidMount() {
+    document.addEventListener('click', this.onClick, false);
   }
 
   componentWillUnmount() {
-    // Remove listener when no longer needed
-    document.removeEventListener('click', this.onDropdownMenuClick, false);
+    document.removeEventListener('click', this.onClick, false);
   }
 
   render() {

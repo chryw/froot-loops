@@ -37,7 +37,7 @@ class App extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.setState({
       routes: this.getRoutes(AppState.pages),
     });

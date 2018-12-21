@@ -24,41 +24,17 @@ class GridItem extends React.Component {
 
     this.onClick = () => {
       const {
-        isActive,
         isCalloutVisible,
       } = this.state;
 
       this.setState({
-        isActive: !isActive,
         isCalloutVisible: !isCalloutVisible,
       });
     };
-
-    this.dismissCallout = (e) => {
-      if (!this.gridItemRef.current.contains(e.target)) {
-        this.setState({
-          isActive: false,
-          isCalloutVisible: false,
-        });
-      }
-    };
-  }
-
-  componentWillMount() {
-    // Add listener to detect click and scroll
-    document.addEventListener('click', this.dismissCallout, false);
-    document.addEventListener('scroll', this.dismissCallout, false);
-  }
-
-  componentWillUnmount() {
-    // Remove listener when no longer needed
-    document.removeEventListener('click', this.dismissCallout, false);
-    document.removeEventListener('scroll', this.dismissCallout, false);
   }
 
   render() {
     const {
-      isActive,
       isCalloutVisible,
     } = this.state;
 
@@ -79,7 +55,7 @@ class GridItem extends React.Component {
             calloutProps={{ gapSpace: 0 }}
           >
             <DefaultButton
-              className={`GridItem${isActive ? ' active' : ''}`}
+              className="GridItem"
               type="button"
               onClick={this.onClick}
               onKeyDown={this.onClick}
@@ -100,7 +76,7 @@ class GridItem extends React.Component {
                 <DetailCallout
                   item={item}
                   target={this.gridItemRef.current}
-                  hidden={!isCalloutVisible}
+                  isVisible={isCalloutVisible}
                 />
               ) : null}
             </DefaultButton>
