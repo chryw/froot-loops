@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Callout,
-  CommandBar,
 } from 'office-ui-fabric-react/lib/index';
 import './DetailCallout.css';
 
@@ -40,6 +39,7 @@ class DetailCallout extends React.Component {
   render() {
     const {
       item,
+      itemProps,
       target,
       className,
     } = this.props;
@@ -58,47 +58,27 @@ class DetailCallout extends React.Component {
         hidden={!isVisible}
         onDismiss={this.onDismiss}
       >
-        <div
-          className="DetailCallout-header"
-        >
+        <h4 className="DetailCallout-header">
           {item.name}
+        </h4>
+        <div>
+          {
+            itemProps
+              .filter(prop => prop.key !== 'name')
+              .map(prop => (
+                <div
+                  key={`${item.key}-prop-${prop.key}`}
+                >
+                  <h4>
+                    {prop.name}
+                  </h4>
+                  <p>
+                    {item[prop.key]}
+                  </p>
+                </div>
+              ))
+          }
         </div>
-        <div className="DetailCallout-body">
-          <p>
-            {item.description || 'Refer to icon name.'}
-          </p>
-        </div>
-        <CommandBar
-          items={[
-            {
-              key: 'svg',
-              name: 'SVG',
-              iconProps: {
-                iconName: 'Embed',
-              },
-              href: `${item.name}_16x.svg`,
-              download: true,
-            },
-            {
-              key: 'png',
-              name: 'PNG',
-              iconProps: {
-                iconName: 'Photo2',
-              },
-              href: `${item.name}_16x.png`,
-              download: true,
-            },
-            {
-              key: 'xaml',
-              name: 'XAML',
-              iconProps: {
-                iconName: 'CodeEdit',
-              },
-              href: `${item.name}_16x.xaml`,
-              download: true,
-            },
-          ]}
-        />
       </Callout>
     );
   }
@@ -106,12 +86,18 @@ class DetailCallout extends React.Component {
 
 DetailCallout.propTypes = {
   item: PropTypes.object.isRequired,
+  itemProps: PropTypes.array,
   target: PropTypes.object,
   className: PropTypes.string,
   isVisible: PropTypes.bool.isRequired,
 };
 
 DetailCallout.defaultProps = {
+  itemProps: [
+    {
+      name: 'Name',
+    },
+  ],
   className: '',
   target: null,
 };

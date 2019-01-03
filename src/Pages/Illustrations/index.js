@@ -1,10 +1,10 @@
-import MsftBrand from './MsftBrand/MsftBrand';
-import ProductShots from './ProductShots/ProductShots';
-import Patterns from './Patterns/Patterns';
-import Diagrams from './Diagrams/Diagrams';
+import Microsoft from './Microsoft';
+import ProductShots from './ProductShots';
+import Patterns from './Patterns';
+import Diagrams from './Diagrams';
 
-export {
-  MsftBrand,
+export default {
+  Microsoft,
   ProductShots,
   Patterns,
   Diagrams,

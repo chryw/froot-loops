@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import {
   SearchBox,
 } from 'office-ui-fabric-react/lib/index';
-import GridView from '../GridView/GridView';
-import ListView from '../ListView/ListView';
+import GridView from '../GridView';
+import ListView from '../ListView';
 import './Gallery.css';
 
 class Gallery extends React.Component {
@@ -16,16 +16,12 @@ class Gallery extends React.Component {
     };
     this.limitResult = (data, amount) => {
       let dataLimited;
-      if (amount) {
+      if (data && amount) {
         dataLimited = data.slice(0, amount);
       } else {
         dataLimited = data;
       }
       return dataLimited;
-    };
-    this.filterResult = (data) => {
-      const isPublish = item => item.publish === 1;
-      return data.filter(isPublish);
     };
     this.positions = {};
     this.onViewButtonClick = this.onViewButtonClick.bind(this);
@@ -35,16 +31,18 @@ class Gallery extends React.Component {
     const {
       items,
       limit,
+      defaultViewMode,
     } = this.props;
     this.setState({
       items: this.limitResult(
-        this.filterResult(items),
+        items,
         limit,
       ),
       filteredItems: this.limitResult(
-        this.filterResult(items),
+        items,
         limit,
       ),
+      viewMode: defaultViewMode,
     });
   }
 
@@ -63,6 +61,7 @@ class Gallery extends React.Component {
 
     const {
       itemProps,
+      imageSize,
     } = this.props;
 
     switch (viewMode) {
@@ -71,6 +70,8 @@ class Gallery extends React.Component {
         return (
           <GridView
             items={filteredItems}
+            itemProps={itemProps}
+            imageSize={imageSize}
           />
         );
       // Fabric DetailsList
@@ -85,6 +86,8 @@ class Gallery extends React.Component {
         return (
           <GridView
             items={filteredItems}
+            itemProps={itemProps}
+            imageSize={imageSize}
           />
         );
     }
@@ -104,7 +107,7 @@ class Gallery extends React.Component {
             onChange={(query) => {
               this.setState({
                 filteredItems: items.filter((item) => {
-                  const metadata = `${item.name.toLowerCase()} ${item.keywords ? item.keywords.join(' ').toLowerCase() : ''}`;
+                  const metadata = `${item.name.toLowerCase()} ${item.keywords ? item.keywords.toLowerCase() : ''} ${item.description ? item.description.toLowerCase() : ''}`;
                   return metadata.indexOf(query.toLowerCase()) >= 0;
                 }),
               });
@@ -125,6 +128,8 @@ Gallery.propTypes = {
   items: PropTypes.array.isRequired,
   limit: PropTypes.number,
   itemProps: PropTypes.array,
+  defaultViewMode: PropTypes.string,
+  imageSize: PropTypes.number,
   urlprefix: PropTypes.string,
 };
 
@@ -137,6 +142,8 @@ Gallery.defaultProps = {
       fieldName: 'fieldName',
     },
   ],
+  defaultViewMode: 'grid',
+  imageSize: 100,
   urlprefix: '/',
 };
 

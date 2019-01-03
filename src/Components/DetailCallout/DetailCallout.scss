@@ -1,12 +1,11 @@
 @import '../../Styles/_variables';
 
-.DetailCallout-header {
+.DetailCallout {
   padding: 1rem;
+}
+
+.DetailCallout-header {
   font-size: $ms-font-size-xl;
   font-weight: $ms-font-weight-semilight;
   word-wrap: break-word;
-}
-
-.DetailCallout-body {
-  padding: 0 1rem 1rem;
 }

@@ -1,8 +1,8 @@
-import Microsoft from './Microsoft/Microsoft';
-import Partners from './Partners/Partners';
-import Internal from './Internal/Internal';
+import Microsoft from './Microsoft';
+import Partners from './Partners';
+import Internal from './Internal';
 
-export {
+export default {
   Microsoft,
   Partners,
   Internal,

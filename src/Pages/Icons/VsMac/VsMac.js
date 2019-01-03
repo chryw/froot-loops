@@ -12,7 +12,7 @@ class VsMac extends React.Component {
   render() {
     return (
       <Page
-        title="Visual Studio for Mac icons"
+        {...this.props}
       >
         <h1>
           {'This is the Visual Studio for Mac icons page. Content TBD.'}

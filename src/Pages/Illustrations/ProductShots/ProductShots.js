@@ -12,7 +12,7 @@ class ProductShots extends React.Component {
   render() {
     return (
       <Page
-        title="Product screenshots and device renders"
+        {...this.props}
       >
         <h1>
           {'This is the product shots page. Content TBD.'}

@@ -6,8 +6,8 @@ import {
   Link,
   DefaultButton,
 } from 'office-ui-fabric-react/lib/index';
-import DropdownMenu from '../DropdownMenu/DropdownMenu';
-import SpriteImage from '../SpriteImage/SpriteImage';
+import DropdownMenu from '../DropdownMenu';
+import SpriteImage from '../SpriteImage';
 import { ReactComponent as ImageSprite } from './assets/sprite.svg';
 
 class SiteNav extends React.Component {

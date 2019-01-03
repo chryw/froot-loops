@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DetailsList } from 'office-ui-fabric-react/lib/index';
+import {
+  DetailsList,
+  DetailsListLayoutMode,
+  CheckboxVisibility,
+} from 'office-ui-fabric-react/lib/index';
 import './ListView.css';
 
 const ListView = (props) => {
@@ -11,6 +15,8 @@ const ListView = (props) => {
       items={items}
       selectionPreservedOnEmptyClick
       columns={fieldNames}
+      layoutMode={DetailsListLayoutMode.justified}
+      checkboxVisibility={CheckboxVisibility.hidden}
     />
   );
 };

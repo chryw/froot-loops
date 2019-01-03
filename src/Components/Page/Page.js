@@ -8,10 +8,11 @@ const Page = (props) => {
     title,
     children,
   } = props;
+
   return (
     <Router basename="/">
       <div className="Page">
-        <div className="Page-header ms-bgColor-purple ms-fontColor-white">
+        <div className="Page-header">
           <h1 className="Page-title">
             {title}
           </h1>
@@ -30,7 +31,7 @@ Page.propTypes = {
 };
 
 Page.defaultProps = {
-  children: {},
+  children: null,
 };
 
 export default Page;

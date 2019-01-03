@@ -12,7 +12,7 @@ class Microsoft extends React.Component {
   render() {
     return (
       <Page
-        title="Microsoft and 1st party brands"
+        {...this.props}
       >
         <h1>
           {'This is the Microsoft and 1st party brands. Content TBD.'}

@@ -12,7 +12,7 @@ class VsCode extends React.Component {
   render() {
     return (
       <Page
-        title="Visual Studio Code icons"
+        {...this.props}
       >
         <h1>
           {'This is the Visual Studio Code icons page. Content TBD.'}

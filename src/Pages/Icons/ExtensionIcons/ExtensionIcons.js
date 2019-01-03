@@ -12,7 +12,7 @@ class ExtensionIcons extends React.Component {
   render() {
     return (
       <Page
-        title="Visual Studio and Visual Studio Code extension icons"
+        {...this.props}
       >
         <h1>
           {'This is the extension icons page. Content TBD.'}

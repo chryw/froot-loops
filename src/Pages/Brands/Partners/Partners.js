@@ -12,7 +12,7 @@ class Partners extends React.Component {
   render() {
     return (
       <Page
-        title="3rd party partner brands"
+        {...this.props}
       >
         <h1>
           {'This is the 3rd party partner brands page. Content TBD.'}

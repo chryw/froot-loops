@@ -12,7 +12,7 @@ class Home extends React.Component {
   render() {
     return (
       <Page
-        title="Home"
+        {...this.props}
       >
         <h1>
           {'This is the home page. Content TBD.'}

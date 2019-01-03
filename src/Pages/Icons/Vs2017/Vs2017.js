@@ -1,105 +1,127 @@
 import React from 'react';
-import { Link, Image, ImageFit } from 'office-ui-fabric-react/lib/index';
-import Page from '../../../Components/Page/Page';
-import Gallery from '../../../Components/Gallery/Gallery';
-import data from './assets/data.json';
+import {
+  Spinner,
+  SpinnerSize,
+  Link,
+  Image,
+  ImageFit,
+} from 'office-ui-fabric-react/lib/index';
+import Page from '../../../Components/Page';
+import Gallery from '../../../Components/Gallery';
+import jsonData from './assets/data.json';
+import './Vs2017.css';
 
-const urlprefix = 'https://via.placeholder.com/500/dadada/000000';
+class Vs2017 extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      data: [],
+    };
 
-const itemProps = [
-  {
-    key: 'image',
-    minWidth: 16,
-    maxWidth: 16,
-    isResizable: false,
-    onRender: item => (
-      <Image
-        src={`${urlprefix}/${item.name}.svg`}
-        alt={item.name}
-        imageFit={ImageFit.fill}
-        width={16}
-        height={16}
-      />
-    ),
-  },
-  {
-    key: 'name',
-    name: 'Name',
-    fieldName: 'name',
-    minWidth: 100,
-    maxWidth: 200,
-    isResizable: true,
-  },
-  {
-    key: 'keywords',
-    name: 'Keywords',
-    fieldName: 'keywords',
-    minWidth: 100,
-    maxWidth: 300,
-    isResizable: true,
-    onRender: item => (
-      `${item.keywords.join(', ')}`
-    ),
-  },
-  {
-    key: 'description',
-    name: 'Description',
-    fieldName: 'description',
-    minWidth: 100,
-    maxWidth: 500,
-    isResizable: true,
-  },
-  {
-    key: 'download-svg',
-    name: 'Download SVG',
-    iconProps: {
-      iconName: 'Embed',
-    },
-    fieldName: 'download-svg',
-    onRender: item => (
-      <Link href={`${urlprefix}${item.name}_16x.svg`} download>
-        {'Download SVG'}
-      </Link>
-    ),
-  },
-  {
-    key: 'download-xaml',
-    name: 'Download XAML',
-    iconProps: {
-      iconName: 'CodeEdit',
-    },
-    fieldName: 'download-xaml',
-    onRender: item => (
-      <Link href={`${urlprefix}${item.name}_16x.xaml`} download>
-        {'Download XAML'}
-      </Link>
-    ),
-  },
-  {
-    key: 'download-png',
-    name: 'Download PNG',
-    iconProps: {
-      iconName: 'Photo2',
-    },
-    fieldName: 'download-png',
-    onRender: item => (
-      <Link href={`${urlprefix}${item.name}_16x.png`} download>
-        {'Download PNG'}
-      </Link>
-    ),
-  },
-];
+    this.urlprefix = `${process.env.PUBLIC_URL}/catalog/vswin-icons`;
 
-const Vs2017 = () => (
-  <Page
-    title="Visual Studio 2017 icons"
-  >
-    <Gallery
-      items={data}
-      urlprefix={urlprefix}
-      itemProps={itemProps}
-    />
-  </Page>
-);
+    this.itemProps = [
+      {
+        key: 'image',
+        minWidth: 16,
+        maxWidth: 16,
+        isResizable: false,
+        onRender: item => (
+          <Image
+            src={`${this.urlprefix}/${item.imageUrl}`}
+            alt={item.name}
+            imageFit={ImageFit.contain}
+            width={16}
+            height={16}
+          />
+        ),
+      },
+      {
+        key: 'name',
+        name: 'Name',
+        fieldName: 'name',
+        minWidth: 100,
+        maxWidth: 200,
+        isResizable: true,
+      },
+      {
+        key: 'keywords',
+        name: 'Keywords',
+        fieldName: 'keywords',
+        minWidth: 200,
+        maxWidth: 200,
+        isResizable: true,
+        isMultiline: true,
+        onRender: item => (
+          `${item.keywords}`
+        ),
+      },
+      {
+        key: 'description',
+        name: 'Description',
+        fieldName: 'description',
+        isMultiline: true,
+        minWidth: 200,
+        isResizable: true,
+      },
+      {
+        key: 'downloads',
+        name: 'Downloads',
+        minWidth: 200,
+        maxWidth: 200,
+        iconProps: {
+          iconName: 'Embed',
+        },
+        fieldName: 'downloads',
+        isResizable: true,
+        onRender: item => (
+          <div
+            className="DetailsList-downloads"
+          >
+            <Link href={`${this.urlprefix}/${item.name}/${item.name}_16x.png`} download>
+              {'PNG'}
+            </Link>
+            <Link href={`${this.urlprefix}/${item.name}/${item.name}_16x.svg`} download>
+              {'SVG'}
+            </Link>
+            <Link href={`${this.urlprefix}/${item.name}/${item.name}_16x.xaml`} download>
+              {'XAML'}
+            </Link>
+          </div>
+        ),
+      },
+    ];
+  }
+
+  componentDidMount() {
+    const data = jsonData.filter(item => item.publish);
+    sessionStorage.setItem('Icons-Vs2017-items', JSON.stringify(data));
+    const cachedData = JSON.parse(sessionStorage.getItem('Icons-Vs2017-items'));
+    this.setState({
+      data: cachedData,
+    });
+  }
+
+  render() {
+    const { data } = this.state;
+    return (
+      <Page
+        {...this.props}
+      >
+        {data.length ? (
+          <Gallery
+            items={data}
+            itemProps={this.itemProps}
+            urlprefix={this.urlprefix}
+            defaultViewMode="list"
+            imageSize={100}
+          />
+        ) : (
+          <Spinner size={SpinnerSize.large} />
+        )}
+      </Page>
+    );
+  }
+}
 
 export default Vs2017;

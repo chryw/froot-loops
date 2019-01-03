@@ -10,7 +10,7 @@ class VsFluent extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     // GET request for remote image
     axios({
       method: 'get',
@@ -32,7 +32,7 @@ class VsFluent extends React.Component {
     console.log(pages);
     return (
       <Page
-        title="Visual Studio Fluent icons"
+        {...this.props}
       >
         <h1>
           {'This is the Visual Studio Fluent icons page. Content TBD.'}

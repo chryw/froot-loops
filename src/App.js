@@ -1,7 +1,7 @@
-import React, { Suspense } from 'react';
+import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
-import SiteNav from './Components/SiteNav/SiteNav';
+import SiteNav from './Components/SiteNav';
 import AppState from './AppState';
 import './App.css';
 
@@ -15,14 +15,27 @@ class App extends React.Component {
     this.createRoutes = (pages) => {
       let routes = [];
       pages.forEach((page) => {
-        routes.push(
-          <Route
-            exact={page.isHomePage}
-            key={page.key}
-            path={page.url}
-            component={page.component}
-          />,
-        );
+        const {
+          key,
+          url,
+          isHomePage,
+          componentUrl,
+          title,
+          figmaFileKey,
+        } = page;
+
+        const PageComponent = lazy(() => import(`./Pages/${componentUrl}`));
+
+        if (componentUrl) {
+          routes.push(
+            <Route
+              key={key}
+              exact={isHomePage}
+              path={url}
+              render={() => <PageComponent title={title} figmaFileKey={figmaFileKey} />}
+            />,
+          );
+        }
         if (page.pages) {
           routes = routes.concat(this.createRoutes(page.pages));
         }

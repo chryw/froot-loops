@@ -12,7 +12,7 @@ class Diagrams extends React.Component {
   render() {
     return (
       <Page
-        title="Diagrams and infographics"
+        {...this.props}
       >
         <h1>
           {'This is the Diagrams and infographics page. Content TBD.'}

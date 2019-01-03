@@ -1,0 +1,12 @@
+.DetailsList-downloads {
+  display: flex;
+  flex-direction: row;
+
+  & > * {
+    display: block;
+
+    &:not(:first-child) {
+      margin-left: 1rem;
+    }
+  }
+}

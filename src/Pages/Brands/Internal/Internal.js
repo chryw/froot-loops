@@ -12,7 +12,7 @@ class Internal extends React.Component {
   render() {
     return (
       <Page
-        title="Internal brands"
+        {...this.props}
       >
         <h1>
           {'This is the internal brands page. Content TBD.'}

@@ -6,7 +6,7 @@ import {
   ImageFit,
   DefaultButton,
 } from 'office-ui-fabric-react/lib/index';
-import DetailCallout from '../DetailCallout/DetailCallout';
+import DetailCallout from '../DetailCallout';
 import './GridItem.css';
 
 class GridItem extends React.Component {
@@ -15,10 +15,7 @@ class GridItem extends React.Component {
     // Create ref
     this.gridItemRef = React.createRef();
 
-    this.IMAGE_PLACEHOLDER = 'https://via.placeholder.com/100/dadada/000000';
-
     this.state = {
-      isActive: false,
       isCalloutVisible: false,
     };
 
@@ -43,6 +40,7 @@ class GridItem extends React.Component {
       width,
       height,
       padding,
+      itemProps,
     } = this.props;
 
     return (
@@ -66,15 +64,16 @@ class GridItem extends React.Component {
               }}
             >
               <Image
-                src={this.IMAGE_PLACEHOLDER}
+                src={item.imageUrl || 'https://via.placeholder.com/636x300'}
                 alt={item.name}
-                imageFit={ImageFit.contain}
+                imageFit={ImageFit.centerCover}
                 width="100%"
                 height="100%"
               />
               { isCalloutVisible ? (
                 <DetailCallout
                   item={item}
+                  itemProps={itemProps}
                   target={this.gridItemRef.current}
                   isVisible={isCalloutVisible}
                 />
@@ -91,12 +90,18 @@ class GridItem extends React.Component {
 
 GridItem.propTypes = {
   item: PropTypes.object.isRequired,
+  itemProps: PropTypes.array,
   width: PropTypes.number,
   height: PropTypes.number,
   padding: PropTypes.number,
 };
 
 GridItem.defaultProps = {
+  itemProps: [
+    {
+      key: 'name',
+    },
+  ],
   width: 96,
   height: 96,
   padding: 16,

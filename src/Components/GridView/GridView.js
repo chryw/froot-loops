@@ -3,23 +3,21 @@ import PropTypes from 'prop-types';
 import {
   List,
 } from 'office-ui-fabric-react/lib/index';
-import GridItem from '../GridItem/GridItem';
+import GridItem from '../GridItem';
 import './GridView.css';
 
 class GridView extends React.Component {
   constructor() {
     super();
-
     this.ROWS_PER_PAGE = 6;
-    this.MAX_ROW_HEIGHT = 100;
-    this.IMAGE_PLACEHOLDER = 'https://via.placeholder.com/100/dadada/000000';
     this.ITEM_PADDING = 16;
 
     this.elementRef = React.createRef();
 
     this.getItemCountForPage = (itemIndex, surfaceRect) => {
+      const { imageSize } = this.props;
       if (itemIndex === 0) {
-        this.columnCount = Math.ceil(surfaceRect.width / this.MAX_ROW_HEIGHT);
+        this.columnCount = Math.ceil(surfaceRect.width / imageSize);
         this.columnWidth = Math.floor(surfaceRect.width / this.columnCount);
         this.rowHeight = this.columnWidth;
       }
@@ -30,7 +28,7 @@ class GridView extends React.Component {
   }
 
   render() {
-    const { items } = this.props;
+    const { items, itemProps } = this.props;
     return (
       <List
         className="GridView"
@@ -42,6 +40,7 @@ class GridView extends React.Component {
         onRenderCell={item => (
           <GridItem
             item={item}
+            itemProps={itemProps}
             width={this.columnWidth}
             height={this.rowHeight}
             padding={this.ITEM_PADDING}
@@ -54,6 +53,17 @@ class GridView extends React.Component {
 
 GridView.propTypes = {
   items: PropTypes.array.isRequired,
+  itemProps: PropTypes.array,
+  imageSize: PropTypes.number,
+};
+
+GridView.defaultProps = {
+  itemProps: [
+    {
+      key: 'name',
+    },
+  ],
+  imageSize: 100,
 };
 
 export default GridView;

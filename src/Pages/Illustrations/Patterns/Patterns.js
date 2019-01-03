@@ -12,7 +12,7 @@ class Patterns extends React.Component {
   render() {
     return (
       <Page
-        title="Background patterns and texutres"
+        {...this.props}
       >
         <h1>
           {'This is the Background patterns and texutres page. Content TBD.'}

@@ -2,15 +2,6 @@
 @import '../../Styles/_utilities.scss';
 @import '../../Styles/_variables/_responsive.scss';
 
-.Gallery {
-  height: calc(100vh - 54px - 120px - 2rem); // total height - nav - page header - page body top and bottom padding
-  position: relative;
-
-  @media screen and (min-width: $ms-screen-min-md) {
-    height: calc(100vh - 54px - 160px - 2rem); // total height - nav - page header - page body top and bottom padding
-  }
-}
-
 .Gallery-header {
   padding: 1rem 0;
   background-color: $ms-color-white;
@@ -27,8 +18,6 @@
 }
 
 .Gallery-body {
-  height: 100%;
-
   *[role="listitem"] {
     float: left;
   }
