@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
@@ -105,12 +105,20 @@ class Microsoft extends React.Component {
       <Page
         {...this.props}
       >
-        <Gallery
-          items={items}
-          itemProps={itemProps}
-          defaultViewMode="grid"
-          imageSize={200}
-        />
+        {items.length ? (
+          <Gallery
+            items={items}
+            itemProps={itemProps}
+            defaultViewMode="grid"
+            imageSize={200}
+          />
+        ) : (
+          <Spinner
+            size={SpinnerSize.large}
+            label="Fetching data from Figma. This may take a few seconds."
+            ariaLive="assertive"
+          />
+        )}
       </Page>
     );
   }
