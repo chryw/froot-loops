@@ -55,7 +55,8 @@ const AppState = {
           key: 'illustrations-microsoft',
           title: 'Microsoft style illustrations',
           url: '/illustrations/microsoft',
-          figmaFileKey: 'Ws6LxqCxVgkHQ1iE5vTjV2ON',
+          figmaFileKey: 'SKPcGX5caIw81qNokIfl3R', // Small file for development
+          // figmaFileKey: 'Ws6LxqCxVgkHQ1iE5vTjV2ON', // Real file for production
           componentUrl: 'Illustrations/Microsoft',
         },
         {

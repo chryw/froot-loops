@@ -6,6 +6,7 @@ import {
 import GridItem from '../GridItem';
 import './GridView.css';
 
+// TODO: This is a stateless component. Maybe convert it to a pure function?
 class GridView extends React.Component {
   constructor() {
     super();
@@ -27,8 +28,13 @@ class GridView extends React.Component {
     this.getPageHeight = () => this.rowHeight * this.ROWS_PER_PAGE;
   }
 
+  componentDidMount() {
+    const { items, itemProps } = this.props;
+  }
+
   render() {
     const { items, itemProps } = this.props;
+    console.log(items);
     return (
       <List
         className="GridView"

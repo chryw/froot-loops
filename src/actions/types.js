@@ -1,0 +1,2 @@
+export const GET_FIGMA_NODES = 'GET_FIGMA_NODES';
+export const GET_FIGMA_IMAGES = 'GET_FIGMA_IMAGES';
