@@ -28,13 +28,13 @@ class GridView extends React.Component {
     this.getPageHeight = () => this.rowHeight * this.ROWS_PER_PAGE;
   }
 
-  componentDidMount() {
-    const { items, itemProps } = this.props;
-  }
-
   render() {
-    const { items, itemProps } = this.props;
-    console.log(items);
+    const {
+      figmaFileKey,
+      urlprefix,
+      items,
+      itemProps,
+    } = this.props;
     return (
       <List
         className="GridView"
@@ -45,6 +45,8 @@ class GridView extends React.Component {
         getPageHeight={this.getPageHeight}
         onRenderCell={item => (
           <GridItem
+            urlprefix={urlprefix}
+            figmaFileKey={figmaFileKey}
             item={item}
             itemProps={itemProps}
             width={this.columnWidth}
@@ -58,12 +60,16 @@ class GridView extends React.Component {
 }
 
 GridView.propTypes = {
+  figmaFileKey: PropTypes.string,
+  urlprefix: PropTypes.string,
   items: PropTypes.array.isRequired,
   itemProps: PropTypes.array,
   imageSize: PropTypes.number,
 };
 
 GridView.defaultProps = {
+  figmaFileKey: null,
+  urlprefix: null,
   itemProps: [
     {
       key: 'name',

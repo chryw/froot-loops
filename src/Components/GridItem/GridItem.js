@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
   TooltipHost,
@@ -6,6 +7,9 @@ import {
   ImageFit,
   DefaultButton,
 } from 'office-ui-fabric-react/lib/index';
+import {
+  getFigmaImages,
+} from '../../actions/figmaActions';
 import DetailCallout from '../DetailCallout';
 import './GridItem.css';
 
@@ -28,6 +32,19 @@ class GridItem extends React.Component {
         isCalloutVisible: !isCalloutVisible,
       });
     };
+  }
+
+  componentDidMount() {
+    const {
+      figmaFileKey,
+    } = this.props;
+    if (figmaFileKey) {
+      const {
+        item,
+        getFigmaImagesConnect,
+      } = this.props;
+      getFigmaImagesConnect(figmaFileKey, item.id);
+    }
   }
 
   render() {
@@ -64,7 +81,7 @@ class GridItem extends React.Component {
               }}
             >
               <Image
-                src={item.imageUrl || 'https://via.placeholder.com/636x300'}
+                src={item.imageUrl || 'https://via.placeholder.com/200'}
                 alt={item.name}
                 imageFit={ImageFit.centerCover}
                 width="100%"
@@ -88,15 +105,22 @@ class GridItem extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({
+  images: state.figmaNodes.images,
+});
+
 GridItem.propTypes = {
+  figmaFileKey: PropTypes.string,
   item: PropTypes.object.isRequired,
   itemProps: PropTypes.array,
   width: PropTypes.number,
   height: PropTypes.number,
   padding: PropTypes.number,
+  getFigmaImagesConnect: PropTypes.func.isRequired,
 };
 
 GridItem.defaultProps = {
+  figmaFileKey: null,
   itemProps: [
     {
       key: 'name',
@@ -107,4 +131,9 @@ GridItem.defaultProps = {
   padding: 16,
 };
 
-export default GridItem;
+export default connect(
+  mapStateToProps,
+  {
+    getFigmaImagesConnect: getFigmaImages,
+  },
+)(GridItem);

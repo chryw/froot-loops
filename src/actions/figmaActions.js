@@ -4,7 +4,7 @@ import {
   GET_FIGMA_IMAGES,
 } from './types';
 
-export const getFigmaNodes = figmaFileKey => (dispatch) => {
+export const getFigmaNodes = figmaFileKey => dispatch => (
   axios({
     method: 'get',
     timeout: 7000,
@@ -56,24 +56,19 @@ export const getFigmaNodes = figmaFileKey => (dispatch) => {
     .then(data => (dispatch({
       type: GET_FIGMA_NODES,
       payload: data,
-    })));
-};
+    })))
+);
 
-export const getFigmaImages = (figmaFileKey, ids) => (dispatch) => {
-  const url = `https://api.figma.com/v1/images/${figmaFileKey}?ids=${ids}&format=svg`;
+export const getFigmaImages = (figmaFileKey, ids) => dispatch => (
   axios({
     method: 'get',
-    timeout: 7000,
     headers: {
       'X-Figma-Token': process.env.REACT_APP_FIGMAKEY,
     },
-    url,
+    url: `https://api.figma.com/v1/images/${figmaFileKey}?ids=${ids}`,
   })
-    .then((response) => {
-      const images = response.data;
-      dispatch({
-        type: GET_FIGMA_IMAGES,
-        payload: images,
-      });
-    });
-};
+    .then(data => (dispatch({
+      type: GET_FIGMA_IMAGES,
+      payload: data.images,
+    })))
+);

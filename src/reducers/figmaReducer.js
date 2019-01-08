@@ -5,7 +5,7 @@ import {
 
 const initialState = {
   items: [],
-  images: {},
+  images: [],
 };
 
 export default function (state = initialState, action) {

@@ -36,6 +36,8 @@
 ### Prerequisites
 - NodeJS v10.0+
 - Yarn v1.1+
+- VS for Win icon assets dump (contact [@Cherry](mailto:v-cowang@microsoft.com))
+- Access to our Figma account if you need to catalog more libraries (contact [@Cherry](mailto:v-cowang@microsoft.com))
 
 ### Steps
 1. Clone the repository  

@@ -61,7 +61,6 @@ class Gallery extends React.Component {
 
     const {
       itemProps,
-      imageSize,
     } = this.props;
 
     switch (viewMode) {
@@ -69,25 +68,21 @@ class Gallery extends React.Component {
       case 'grid':
         return (
           <GridView
-            items={filteredItems}
-            itemProps={itemProps}
-            imageSize={imageSize}
+            {...this.props}
           />
         );
       // Fabric DetailsList
       case 'list':
         return (
           <ListView
-            items={filteredItems}
+            {...this.props}
             fieldNames={itemProps}
           />
         );
       default:
         return (
           <GridView
-            items={filteredItems}
-            itemProps={itemProps}
-            imageSize={imageSize}
+            {...this.props}
           />
         );
     }
@@ -125,15 +120,18 @@ class Gallery extends React.Component {
 }
 
 Gallery.propTypes = {
+  figmaFileKey: PropTypes.string,
+  urlprefix: PropTypes.string,
   items: PropTypes.array.isRequired,
   limit: PropTypes.number,
   itemProps: PropTypes.array,
   defaultViewMode: PropTypes.string,
   imageSize: PropTypes.number,
-  urlprefix: PropTypes.string,
 };
 
 Gallery.defaultProps = {
+  figmaFileKey: null,
+  urlprefix: null,
   limit: -1,
   itemProps: [
     {
@@ -144,7 +142,6 @@ Gallery.defaultProps = {
   ],
   defaultViewMode: 'grid',
   imageSize: 100,
-  urlprefix: '/',
 };
 
 export default Gallery;

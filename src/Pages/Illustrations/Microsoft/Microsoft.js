@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
@@ -95,18 +95,26 @@ const itemProps = [
 
 class Microsoft extends React.Component {
   componentDidMount() {
-    const { figmaFileKey, getFigmaNodesConnect } = this.props;
+    const {
+      figmaFileKey,
+      getFigmaNodesConnect,
+    } = this.props;
+    // Get data from Figma
     getFigmaNodesConnect(figmaFileKey);
   }
 
   render() {
-    const { items } = this.props;
+    const {
+      figmaFileKey,
+      items,
+    } = this.props;
     return (
       <Page
         {...this.props}
       >
         {items.length ? (
           <Gallery
+            figmaFileKey={figmaFileKey}
             items={items}
             itemProps={itemProps}
             defaultViewMode="grid"
@@ -115,7 +123,7 @@ class Microsoft extends React.Component {
         ) : (
           <Spinner
             size={SpinnerSize.large}
-            label="Fetching data from Figma. This may take a few seconds."
+            label="Fetching data from Figma. This may take a while."
             ariaLive="assertive"
           />
         )}
