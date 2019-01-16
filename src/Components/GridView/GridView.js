@@ -10,7 +10,8 @@ import './GridView.css';
 class GridView extends React.Component {
   constructor() {
     super();
-    this.ROWS_PER_PAGE = 6;
+
+    this.ROWS_PER_PAGE = 4;
     this.ITEM_PADDING = 16;
 
     this.elementRef = React.createRef();
@@ -25,7 +26,9 @@ class GridView extends React.Component {
       return this.columnCount * this.ROWS_PER_PAGE;
     };
 
-    this.getPageHeight = () => this.rowHeight * this.ROWS_PER_PAGE;
+    this.getPageHeight = () => (
+      this.rowHeight * this.ROWS_PER_PAGE
+    );
   }
 
   render() {

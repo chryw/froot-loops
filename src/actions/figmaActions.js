@@ -65,7 +65,7 @@ export const getFigmaImages = (figmaFileKey, ids) => dispatch => (
     headers: {
       'X-Figma-Token': process.env.REACT_APP_FIGMAKEY,
     },
-    url: `https://api.figma.com/v1/images/${figmaFileKey}?ids=${ids}`,
+    url: `https://api.figma.com/v1/images/${figmaFileKey}?ids=${ids}&format=svg`,
   })
     .then(data => (dispatch({
       type: GET_FIGMA_IMAGES,

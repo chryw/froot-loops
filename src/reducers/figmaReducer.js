@@ -4,7 +4,7 @@ import {
 } from '../actions/types';
 
 const initialState = {
-  items: [],
+  nodes: [],
   images: [],
 };
 
@@ -13,7 +13,7 @@ export default function (state = initialState, action) {
     case GET_FIGMA_NODES:
       return {
         ...state,
-        items: action.payload,
+        nodes: action.payload,
       };
     case GET_FIGMA_IMAGES:
       return {

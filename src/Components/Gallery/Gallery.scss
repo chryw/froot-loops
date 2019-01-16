@@ -23,6 +23,11 @@
   }
 }
 
-.Gallery-detailPane-footer {
-  margin-top: 2rem;
+.Gallery-loadmore {
+  width: 100%;
+  padding: 2rem 0;
+
+  &.hidden {
+    display: none;
+  }
 }

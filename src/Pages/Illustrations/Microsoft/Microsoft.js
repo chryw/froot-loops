@@ -93,6 +93,10 @@ const itemProps = [
   },
 ];
 
+const THUMBNAIL_SIZE = 200;
+
+const DEFAULT_VIEW_MODE = 'grid';
+
 class Microsoft extends React.Component {
   componentDidMount() {
     const {
@@ -106,19 +110,19 @@ class Microsoft extends React.Component {
   render() {
     const {
       figmaFileKey,
-      items,
+      nodes,
     } = this.props;
     return (
       <Page
         {...this.props}
       >
-        {items.length ? (
+        {nodes.length ? (
           <Gallery
             figmaFileKey={figmaFileKey}
-            items={items}
+            items={nodes}
             itemProps={itemProps}
-            defaultViewMode="grid"
-            imageSize={200}
+            defaultViewMode={DEFAULT_VIEW_MODE}
+            imageSize={THUMBNAIL_SIZE}
           />
         ) : (
           <Spinner
@@ -133,14 +137,14 @@ class Microsoft extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  items: state.figmaNodes.items,
+  nodes: state.figma.nodes,
 });
 
 Microsoft.propTypes = {
   title: PropTypes.string.isRequired,
   figmaFileKey: PropTypes.string.isRequired,
   getFigmaNodesConnect: PropTypes.func.isRequired,
-  items: PropTypes.array.isRequired,
+  nodes: PropTypes.array.isRequired,
 };
 
 export default connect(

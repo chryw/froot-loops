@@ -3,5 +3,5 @@ import figmaReducer from './figmaReducer';
 
 
 export default combineReducers({
-  figmaNodes: figmaReducer,
+  figma: figmaReducer,
 });
