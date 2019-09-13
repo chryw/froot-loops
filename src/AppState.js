@@ -29,7 +29,7 @@ const AppState = {
           key: 'icons-vsfluent',
           title: 'Visual Studio 2019 (Fluent) icons',
           url: '/icons/vsfluent',
-          figmaFileKey: 'GzJ3fuqSE49GKT31ssOr7VZ8',
+          figmaFileKey: 'YWpcTtAapn70CF9TiJZr10Ds',
           componentUrl: 'Icons/VsFluent',
         },
         {

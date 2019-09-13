@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import Page from '../../../Components/Page/Page';
 
@@ -11,13 +12,14 @@ class VsFluent extends React.Component {
   }
 
   componentDidMount() {
+    const { figmaFileKey } = this.props;
     // GET request for remote image
     axios({
       method: 'get',
       headers: {
         'X-Figma-Token': process.env.REACT_APP_FIGMAKEY,
       },
-      url: 'https://api.figma.com/v1/files/GzJ3fuqSE49GKT31ssOr7VZ8/?ids=1:3A623',
+      url: `https://api.figma.com/v1/files/${figmaFileKey}`,
     })
       .then((response) => {
         this.setState({
@@ -41,5 +43,9 @@ class VsFluent extends React.Component {
     );
   }
 }
+
+VsFluent.propTypes = {
+  figmaFileKey: PropTypes.string.isRequired,
+};
 
 export default VsFluent;

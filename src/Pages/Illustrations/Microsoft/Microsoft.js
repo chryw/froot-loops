@@ -151,8 +151,8 @@ class Microsoft extends React.Component {
             const rawDescription = figmaComponentsData[node.id].description;
             const matchKeywords = /(?:%KEYWORDS%)(.[^|]*)/g.exec(rawDescription) || rawDescription;
             const matchDescription = /(?:%DESCRIPTION%)(.[^|]*)/g.exec(rawDescription) || rawDescription;
-            const keywords = matchKeywords[1].trim();
-            const description = matchDescription[1].trim();
+            const keywords = matchKeywords[1] ? matchKeywords[1].trim() : '';
+            const description = matchDescription[1] ? matchDescription[1].trim() : '';
             // TODO: Fetch render imageUrl.
             // Figma API image endpoint is dead today. Will try again later.
             return ({
