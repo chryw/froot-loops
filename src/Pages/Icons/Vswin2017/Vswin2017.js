@@ -9,9 +9,9 @@ import {
 import Page from '../../../Components/Page';
 import Gallery from '../../../Components/Gallery';
 import jsonData from './assets/data.json';
-import './Vs2017.css';
+import './Vswin2017.css';
 
-class Vs2017 extends React.Component {
+class Vswin2017 extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -95,8 +95,8 @@ class Vs2017 extends React.Component {
 
   componentDidMount() {
     const data = jsonData.filter(item => item.publish);
-    sessionStorage.setItem('Icons-Vs2017-items', JSON.stringify(data));
-    const cachedData = JSON.parse(sessionStorage.getItem('Icons-Vs2017-items'));
+    sessionStorage.setItem('Icons-Vswin2017-items', JSON.stringify(data));
+    const cachedData = JSON.parse(sessionStorage.getItem('Icons-Vswin2017-items'));
     this.setState({
       data: cachedData,
     });
@@ -124,4 +124,4 @@ class Vs2017 extends React.Component {
   }
 }
 
-export default Vs2017;
+export default Vswin2017;

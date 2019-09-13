@@ -14,10 +14,10 @@ const AppState = {
       isCategory: true,
       pages: [
         {
-          key: 'icons-vs2017',
+          key: 'icons-vswin-2017',
           title: 'Visual Studio 2017 icons',
-          url: '/icons/vs2017',
-          componentUrl: 'Icons/Vs2017',
+          url: '/icons/vswin2017',
+          componentUrl: 'Icons/Vswin2017',
         },
         {
           key: 'icons-vsmac',
