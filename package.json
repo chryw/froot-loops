@@ -1,5 +1,5 @@
 {
-  "name": "froot-loops",
+  "name": "D3Studio-AssetsCatalog",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -65,10 +65,10 @@
       ]
     }
   },
-  "description": "UX assets catalog",
+  "description": "Image assets catalog for D3 Studio.",
   "main": "index.js",
-  "repository": "https://github.com/chryw/froot-loops.git",
-  "author": "<chryw@catenology.com>",
+  "repository": "https://devdiv@dev.azure.com/devdiv/OnlineServices/_git/D3Studio-AssetsCatalog",
+  "author": "<cherwan@microsoft.com>",
   "license": "MIT",
   "browserslist": [
     ">0.2%",
